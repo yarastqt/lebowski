@@ -13,6 +13,8 @@ export interface Color {
   surface0: string
   surfaceSubmerged: string
 
+  statusPositive: string
+
   textPrimary: string
   textSecondary: string
 
@@ -38,6 +40,7 @@ export interface Typography {
   }
   textS: {
     fontFamily: string
+    lineHeight: number
     fontSize: number
   }
 }

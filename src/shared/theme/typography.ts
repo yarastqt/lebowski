@@ -18,7 +18,8 @@ export const typography: Typography = {
     fontSize: 16,
   },
   textS: {
-    fontFamily: 'Rubik-Light',
-    fontSize: 13,
+    fontFamily: 'NunitoSans_400Regular',
+    fontSize: 14,
+    lineHeight: 18,
   },
 }

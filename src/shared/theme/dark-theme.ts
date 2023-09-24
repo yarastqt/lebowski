@@ -11,8 +11,10 @@ export const darkTheme: Theme = {
 
     lineNormal: 'rgba(193, 199, 200, 0.2)',
 
-    surface0: 'rgba(20, 20, 25, 1)',
-    surfaceSubmerged: 'rgba(255, 253, 250, 0.2)',
+    surface0: 'rgba(0, 0, 0, 1)',
+    surfaceSubmerged: 'rgba(18, 18, 18, 1)',
+
+    statusPositive: 'rgba(0, 214, 168, 1)',
 
     textPrimary: 'rgba(255, 253, 250, 1)',
     textSecondary: 'rgba(255, 253, 250, 0.5)',
