@@ -1,9 +1,11 @@
+import { StatusBar } from 'expo-status-bar'
 import { FC, ReactNode } from 'react'
 import { View } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { createStyles, useTheme } from '../shared/theme'
+import { createStyles, useTheme } from '@app/shared/theme'
+
+import { Header } from './ui/header'
 
 export interface MainLayoutProps {
   children: ReactNode
@@ -18,6 +20,7 @@ export const MainLayout: FC<MainLayoutProps> = (props) => {
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <Header />
 
       <View style={styles.content}>{children}</View>
     </SafeAreaView>

@@ -1,29 +1,42 @@
 import { FC } from 'react'
 import { View } from 'react-native'
-import {
-  CreditCardOutline,
-  CreditCardPlusOutline,
-  PeopleGroupOutline,
-  PersonOutline,
-} from '~/shared/icons'
 
-import { createStyles } from '../../shared/theme'
+import { CreditCardPlusOutline } from '@app/shared/icons'
+import { createStyles } from '@app/shared/theme'
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
+
 import { BottomNavigationButton } from './bottom-navigation-button'
 
-export const BottomNavigation: FC = () => {
+export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
+  const { descriptors, navigation, state } = props
   const styles = useStyles()
+
+  const buttons = state.routes.map((route, index) => {
+    const { options } = descriptors[route.key]
+    const label = typeof options.tabBarLabel === 'string' ? options.tabBarLabel : 'Unknown'
+
+    const isActive = state.index === index
+    const onPressHandler = () => {
+      if (!isActive) {
+        navigation.navigate(route.name)
+      }
+    }
+
+    return (
+      <BottomNavigationButton
+        key={index}
+        isActive={isActive}
+        icon={options.tabBarIcon}
+        onPress={onPressHandler}
+      >
+        {label}
+      </BottomNavigationButton>
+    )
+  })
 
   return (
     <View style={styles.root}>
-      <BottomNavigationButton icon={CreditCardOutline} isActive onPress={() => null}>
-        Debts
-      </BottomNavigationButton>
-      <BottomNavigationButton icon={PeopleGroupOutline} isActive={false} onPress={() => null}>
-        People
-      </BottomNavigationButton>
-      <BottomNavigationButton icon={PersonOutline} isActive={false} onPress={() => null}>
-        Profile
-      </BottomNavigationButton>
+      {buttons}
       <BottomNavigationButton icon={CreditCardPlusOutline} isActive={false} onPress={() => null}>
         New debt
       </BottomNavigationButton>
@@ -31,10 +44,10 @@ export const BottomNavigation: FC = () => {
   )
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, insets) => ({
   root: {
     position: 'absolute',
-    bottom: 0,
+    bottom: insets.bottom,
     left: 16,
     right: 16,
     backgroundColor: theme.color.surfaceSubmerged,

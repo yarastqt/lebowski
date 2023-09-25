@@ -20,18 +20,22 @@ export const BottomNavigationButton: FC<BottomNavigationButtonProps> = (props) =
   const scale = useSharedValue(1)
 
   const onPressIn = useCallback(() => {
-    scale.value = withSpring(0.9)
-  }, [])
+    if (!isActive) {
+      scale.value = withSpring(0.9)
+    }
+  }, [isActive])
 
   const onPressOut = useCallback(() => {
-    scale.value = withSpring(1)
-  }, [])
+    if (!isActive) {
+      scale.value = withSpring(1)
+    }
+  }, [isActive])
 
   const rootStyles = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
     }
-  })
+  }, [])
 
   return (
     <Pressable onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut} style={styles.root}>
