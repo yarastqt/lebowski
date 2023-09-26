@@ -5,6 +5,11 @@ export const typography: Typography = {
     fontFamily: 'Rubik-Light',
     fontSize: 120,
   },
+  headingM: {
+    fontFamily: 'NunitoSans_600SemiBold',
+    fontSize: 20,
+    lineHeight: 24,
+  },
   textXL: {
     fontFamily: 'Rubik-Light',
     fontSize: 24,

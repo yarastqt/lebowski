@@ -13,6 +13,7 @@ export const darkTheme: Theme = {
 
     surface0: 'rgba(0, 0, 0, 1)',
     surfaceSubmerged: 'rgba(18, 18, 18, 1)',
+    surfaceOverlay: 'rgba(14, 14, 15, 0.88)',
 
     statusPositive: 'rgba(0, 214, 168, 1)',
 

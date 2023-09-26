@@ -1,3 +1,4 @@
+export * from './close'
 export * from './credit-card-outline'
 export * from './credit-card-plus-outline'
 export * from './people-group-outline'

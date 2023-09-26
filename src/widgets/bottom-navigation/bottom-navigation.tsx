@@ -1,6 +1,9 @@
+import { useUnit } from 'effector-react'
 import { FC } from 'react'
 import { View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { CreateDebtDialog, createDebtModel } from '@app/features/create-debt'
 import { CreditCardPlusOutline } from '@app/shared/icons'
 import { createStyles } from '@app/shared/theme'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
@@ -9,7 +12,9 @@ import { BottomNavigationButton } from './bottom-navigation-button'
 
 export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
   const { descriptors, navigation, state } = props
+  const safeAriaInsets = useSafeAreaInsets()
   const styles = useStyles()
+  const { open } = useUnit(createDebtModel)
 
   const buttons = state.routes.map((route, index) => {
     const { options } = descriptors[route.key]
@@ -35,19 +40,22 @@ export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
   })
 
   return (
-    <View style={styles.root}>
-      {buttons}
-      <BottomNavigationButton icon={CreditCardPlusOutline} isActive={false} onPress={() => null}>
-        New debt
-      </BottomNavigationButton>
-    </View>
+    <>
+      <View style={[styles.root, { bottom: safeAriaInsets.bottom }]}>
+        {buttons}
+        <BottomNavigationButton icon={CreditCardPlusOutline} isActive={false} onPress={open}>
+          New debt
+        </BottomNavigationButton>
+      </View>
+
+      <CreateDebtDialog />
+    </>
   )
 }
 
-const useStyles = createStyles((theme, insets) => ({
+const useStyles = createStyles((theme) => ({
   root: {
     position: 'absolute',
-    bottom: insets.bottom,
     left: 16,
     right: 16,
     backgroundColor: theme.color.surfaceSubmerged,

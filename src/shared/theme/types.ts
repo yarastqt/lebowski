@@ -12,6 +12,7 @@ export interface Color {
 
   surface0: string
   surfaceSubmerged: string
+  surfaceOverlay: string
 
   statusPositive: string
 
@@ -24,6 +25,11 @@ export interface Color {
 export interface Typography {
   displayL: {
     fontFamily: string
+    fontSize: number
+  }
+  headingM: {
+    fontFamily: string
+    lineHeight: number
     fontSize: number
   }
   textXL: {

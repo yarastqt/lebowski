@@ -13,6 +13,7 @@ export const lightTheme: Theme = {
 
     surface0: 'rgba(255, 253, 250, 1)',
     surfaceSubmerged: 'rgba(20, 20, 25, 0.05)',
+    surfaceOverlay: '',
 
     statusPositive: '',
 
