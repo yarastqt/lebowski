@@ -4,25 +4,15 @@ import { FC } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { DebtsScreen } from '@app/screens/debts-screen'
-import { PeopleScreen } from '@app/screens/people-screen'
-import { ProfileScreen } from '@app/screens/profile-screen'
-import { CreditCardOutline, PeopleGroupOutline, PersonOutline } from '@app/shared/icons'
-import { RootStackParamList, Route } from '@app/shared/navigation'
-import { BottomNavigation } from '@app/widgets/bottom-navigation'
 import {
   NunitoSans_400Regular,
   NunitoSans_600SemiBold,
   useFonts,
 } from '@expo-google-fonts/nunito-sans'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 
-const Tab = createBottomTabNavigator<RootStackParamList>()
-const DEFAULT_SCREEN_OPTIONS: BottomTabNavigationOptions = {
-  headerShown: false,
-}
+import { RootScreens } from './screens'
 
 const scope = fork()
 
@@ -42,38 +32,7 @@ export const Application: FC = () => {
         <BottomSheetModalProvider>
           <SafeAreaProvider>
             <NavigationContainer>
-              <Tab.Navigator
-                initialRouteName={Route.debts}
-                tabBar={(props) => <BottomNavigation {...props} />}
-              >
-                <Tab.Screen
-                  component={DebtsScreen}
-                  name={Route.debts}
-                  options={{
-                    ...DEFAULT_SCREEN_OPTIONS,
-                    tabBarLabel: 'Debts',
-                    tabBarIcon: CreditCardOutline,
-                  }}
-                />
-                <Tab.Screen
-                  component={PeopleScreen}
-                  name={Route.people}
-                  options={{
-                    ...DEFAULT_SCREEN_OPTIONS,
-                    tabBarLabel: 'People',
-                    tabBarIcon: PeopleGroupOutline,
-                  }}
-                />
-                <Tab.Screen
-                  component={ProfileScreen}
-                  name={Route.profile}
-                  options={{
-                    ...DEFAULT_SCREEN_OPTIONS,
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: PersonOutline,
-                  }}
-                />
-              </Tab.Navigator>
+              <RootScreens />
             </NavigationContainer>
           </SafeAreaProvider>
         </BottomSheetModalProvider>

@@ -23,25 +23,9 @@ export interface Color {
 }
 
 export interface Typography {
-  displayL: {
-    fontFamily: string
-    fontSize: number
-  }
   headingM: {
     fontFamily: string
     lineHeight: number
-    fontSize: number
-  }
-  textXL: {
-    fontFamily: string
-    fontSize: number
-  }
-  textL: {
-    fontFamily: string
-    fontSize: number
-  }
-  textM: {
-    fontFamily: string
     fontSize: number
   }
   textS: {
