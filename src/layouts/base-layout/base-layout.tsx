@@ -7,7 +7,7 @@ import { createStyles, useTheme } from '@app/shared/theme'
 
 export interface BaseLayoutProps {
   children: ReactNode
-  header: ReactNode
+  header?: ReactNode
 }
 
 export const BaseLayout: FC<BaseLayoutProps> = (props) => {
