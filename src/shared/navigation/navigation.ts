@@ -1,8 +1,8 @@
 export enum Route {
   root = 'root',
   auth = 'auth',
+  signup = 'signup',
   settings = 'settings',
-
   splash = 'splash',
   debts = 'debts',
   people = 'people',
@@ -19,6 +19,7 @@ export type MainTabParamList = {
 export type RootStackParamList = {
   root: undefined
   auth: undefined
+  signup: undefined
   settings: undefined
 }
 
