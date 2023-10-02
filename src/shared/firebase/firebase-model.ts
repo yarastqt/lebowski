@@ -1,7 +1,7 @@
-import { createStore, sample } from 'effector'
+import { createEffect, createStore, sample } from 'effector'
 import { FirebaseApp, initializeApp } from 'firebase/app'
 // @ts-expect-error
-import { getReactNativePersistence, initializeAuth } from 'firebase/auth'
+import { Auth, getReactNativePersistence, initializeAuth } from 'firebase/auth'
 
 import { appStarted } from '@app/shared/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -16,18 +16,31 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 }
 
-const app = initializeApp(firebaseConfig)
+const createFirebaseFx = createEffect(() => {
+  const firebase = initializeApp(firebaseConfig)
+  const fireauth = initializeAuth(firebase, {
+    persistence: getReactNativePersistence(AsyncStorage),
+  })
 
-// const auth = initializeAuth(app, {
-//   persistence: getReactNativePersistence(AsyncStorage),
-// })
+  return { firebase, fireauth }
+})
 
 export const $firebase = createStore<FirebaseApp>(null)
+export const $fireauth = createStore<Auth>(null)
 
 sample({
   clock: appStarted,
-  fn: () => initializeApp(firebaseConfig),
+  target: createFirebaseFx,
+})
+
+sample({
+  clock: createFirebaseFx.doneData,
+  fn: (payload) => payload.firebase,
   target: $firebase,
 })
 
-$firebase.watch(console.log)
+sample({
+  clock: createFirebaseFx.doneData,
+  fn: (payload) => payload.fireauth,
+  target: $fireauth,
+})
