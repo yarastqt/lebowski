@@ -1,32 +1,70 @@
 import { useUnit } from 'effector-react'
-import { FC } from 'react'
-import { Button, TextInput, View } from 'react-native'
+import { FC, useEffect } from 'react'
+import { KeyboardAvoidingView, View } from 'react-native'
+
+import { createStyles } from '@app/shared/theme'
+import { ActionButton, TextField } from '@app/shared/ui'
 
 import { signupModel } from '../signup-model'
 
 export const SignupForm: FC = () => {
-  const { email, password, onEmailChange, onPasswordChange, onCreatePress } = useUnit(signupModel)
+  const styles = useStyles()
+
+  const {
+    email,
+    isPending,
+    isValid,
+    onCreatePress,
+    onEmailChange,
+    onPasswordChange,
+    password,
+    screenUnmounted,
+  } = useUnit(signupModel)
+
+  useEffect(() => {
+    return screenUnmounted
+  }, [screenUnmounted])
 
   return (
-    <View>
-      <TextInput
-        value={email}
-        onChangeText={onEmailChange}
-        placeholder="Email"
-        keyboardType="email-address"
-        style={{ color: '#fff' }}
-        placeholderTextColor="#fff"
-      />
-      <TextInput
-        value={password}
-        onChangeText={onPasswordChange}
-        placeholder="Password"
-        secureTextEntry
-        placeholderTextColor="#fff"
-        style={{ color: '#fff' }}
-      />
+    <View style={styles.root}>
+      <KeyboardAvoidingView behavior="padding" style={styles.content}>
+        <TextField
+          keyboardType="email-address"
+          label="Email"
+          onChange={onEmailChange}
+          value={email}
+        />
+        <TextField
+          keyboardType="ascii-capable"
+          label="Password"
+          onChange={onPasswordChange}
+          secureTextEntry
+          value={password}
+        />
+      </KeyboardAvoidingView>
 
-      <Button title="Create" onPress={onCreatePress} />
+      <View style={styles.button}>
+        <ActionButton isDisabled={!isValid} isPending={isPending} onPress={onCreatePress}>
+          Continue
+        </ActionButton>
+      </View>
     </View>
   )
 }
+
+const useStyles = createStyles(() => ({
+  root: {
+    flex: 1,
+  },
+
+  content: {
+    marginTop: 'auto',
+    gap: 16,
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  button: {
+    marginTop: 'auto',
+  },
+}))

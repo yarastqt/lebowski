@@ -7,11 +7,13 @@ export const signupModel = (() => {
   const emailChanged = createEvent<string>()
   const passwordChanged = createEvent<string>()
   const createPressed = createEvent()
+  const reset = createEvent()
 
   const $email = createStore('')
   const $password = createStore('')
 
   const $formValues = combine($email, $password, (email, password) => ({ email, password }))
+  const $isValid = combine($formValues, (values) => Boolean(values.email && values.password))
 
   const createUserFx = attach({
     source: [$formValues, $fireauth],
@@ -26,24 +28,34 @@ export const signupModel = (() => {
     },
   })
 
+  const $isPending = createUserFx.pending
+
   sample({ clock: emailChanged, target: $email })
   sample({ clock: passwordChanged, target: $password })
 
   sample({
     clock: createPressed,
-    source: $formValues,
+    source: [$isPending, $isValid],
     // TODO: Add validation.
-    filter: (values) => Boolean(values.email && values.password),
+    filter: ([isPending, isValid]) => !isPending && isValid,
     target: createUserFx,
+  })
+
+  sample({
+    clock: reset,
+    target: [$email.reinit, $password.reinit],
   })
 
   return {
     '@@unitShape': () => ({
       email: $email,
+      isPending: $isPending,
+      isValid: $isValid,
       onCreatePress: createPressed,
       onEmailChange: emailChanged,
       onPasswordChange: passwordChanged,
       password: $password,
+      screenUnmounted: reset,
     }),
   }
 })()
