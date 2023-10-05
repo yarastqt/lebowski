@@ -7,6 +7,10 @@ export interface Color {
   brandBgBase: string
   brandBgPressed: string
   brandTextOn: string
+  mutedBg: string
+
+  defaultBorder: string
+  brandBorder: string
 
   lineNormal: string
 
@@ -18,6 +22,7 @@ export interface Color {
 
   textPrimary: string
   textSecondary: string
+  mutedText: string
 
   transparent: string
 }
@@ -29,6 +34,16 @@ export interface Typography {
     fontSize: number
   }
   textS: {
+    fontFamily: string
+    lineHeight: number
+    fontSize: number
+  }
+  textM: {
+    fontFamily: string
+    lineHeight: number
+    fontSize: number
+  }
+  textL: {
     fontFamily: string
     lineHeight: number
     fontSize: number

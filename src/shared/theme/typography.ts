@@ -11,4 +11,14 @@ export const typography: Typography = {
     fontSize: 14,
     lineHeight: 18,
   },
+  textM: {
+    fontFamily: 'NunitoSans_400Regular',
+    fontSize: 16,
+    lineHeight: 20,
+  },
+  textL: {
+    fontFamily: 'NunitoSans_400Regular',
+    fontSize: 18,
+    lineHeight: 24,
+  },
 }

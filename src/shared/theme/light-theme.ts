@@ -8,6 +8,10 @@ export const lightTheme: Theme = {
     brandBgBase: 'rgba(20, 20, 25, 1)',
     brandBgPressed: 'rgba(20, 20, 25, 0.9)',
     brandTextOn: 'rgba(255, 253, 250, 1)',
+    mutedBg: '',
+
+    defaultBorder: '',
+    brandBorder: '',
 
     lineNormal: 'rgba(20, 20, 25, 0.1)',
 
@@ -19,6 +23,7 @@ export const lightTheme: Theme = {
 
     textPrimary: 'rgba(20, 20, 25, 1)',
     textSecondary: 'rgba(20, 20, 25, 0.5)',
+    mutedText: '',
 
     transparent: 'transparent',
   },

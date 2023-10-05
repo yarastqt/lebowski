@@ -8,6 +8,10 @@ export const darkTheme: Theme = {
     brandBgBase: 'rgba(255, 253, 250, 1)',
     brandBgPressed: 'rgba(255, 253, 250, 0.9)',
     brandTextOn: 'rgba(20, 20, 25, 1)',
+    mutedBg: 'rgba(250, 250, 255, 0.06)',
+
+    defaultBorder: 'rgba(250, 250, 255, 0.14)',
+    brandBorder: 'rgba(250, 250, 255, 1)',
 
     lineNormal: 'rgba(193, 199, 200, 0.2)',
 
@@ -19,6 +23,7 @@ export const darkTheme: Theme = {
 
     textPrimary: 'rgba(255, 253, 250, 1)',
     textSecondary: 'rgba(255, 253, 250, 0.5)',
+    mutedText: 'rgba(250, 250, 255, 0.24)',
 
     transparent: 'transparent',
   },
