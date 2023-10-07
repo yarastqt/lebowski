@@ -5,8 +5,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { RootScreens } from '@app/screens'
-import { appStarted } from '@app/shared/config'
+import { appStarted, scope } from '@app/shared/config'
 import '@app/shared/firebase'
+import '@app/shared/session'
 import {
   NunitoSans_400Regular,
   NunitoSans_600SemiBold,
@@ -14,8 +15,6 @@ import {
 } from '@expo-google-fonts/nunito-sans'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { NavigationContainer } from '@react-navigation/native'
-
-const scope = fork()
 
 export const Application: FC = () => {
   const [fontsLoaded, fontError] = useFonts({

@@ -1,4 +1,4 @@
-import { createEffect, createStore, sample } from 'effector'
+import { createEffect, createEvent, createStore, sample } from 'effector'
 import { FirebaseApp, initializeApp } from 'firebase/app'
 // @ts-expect-error
 import { Auth, getReactNativePersistence, initializeAuth } from 'firebase/auth'
@@ -25,6 +25,8 @@ const createFirebaseFx = createEffect(() => {
   return { firebase, fireauth }
 })
 
+export const firebaseAttached = createEvent()
+
 export const $firebase = createStore<FirebaseApp>(null)
 export const $fireauth = createStore<Auth>(null)
 
@@ -43,4 +45,10 @@ sample({
   clock: createFirebaseFx.doneData,
   fn: (payload) => payload.fireauth,
   target: $fireauth,
+})
+
+sample({
+  clock: createFirebaseFx.done,
+  fn: () => null,
+  target: firebaseAttached,
 })

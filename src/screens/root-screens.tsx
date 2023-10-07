@@ -1,6 +1,8 @@
+import { useUnit } from 'effector-react'
 import { FC } from 'react'
 
 import { RootStackParamList, Route } from '@app/shared/navigation'
+import { sessionModel } from '@app/shared/session'
 import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
@@ -17,28 +19,37 @@ const DEFAULT_SCREEN_OPTIONS: NativeStackNavigationOptions = {
 }
 
 export const RootScreens: FC = () => {
+  const { isSignedIn } = useUnit(sessionModel)
+
   return (
-    <RootStack.Navigator initialRouteName={Route.signin}>
-      <RootStack.Screen
-        component={MainScreens}
-        name={Route.root}
-        options={DEFAULT_SCREEN_OPTIONS}
-      />
-      <RootStack.Screen
-        component={SignInScreen}
-        name={Route.signin}
-        options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
-      />
-      <RootStack.Screen
-        component={SignupScreen}
-        name={Route.signup}
-        options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
-      />
-      <RootStack.Screen
-        component={SettingsScreen}
-        name={Route.settings}
-        options={DEFAULT_SCREEN_OPTIONS}
-      />
+    <RootStack.Navigator>
+      {isSignedIn ? (
+        <>
+          <RootStack.Screen
+            component={MainScreens}
+            name={Route.root}
+            options={DEFAULT_SCREEN_OPTIONS}
+          />
+          <RootStack.Screen
+            component={SettingsScreen}
+            name={Route.settings}
+            options={DEFAULT_SCREEN_OPTIONS}
+          />
+        </>
+      ) : (
+        <>
+          <RootStack.Screen
+            component={SignInScreen}
+            name={Route.signin}
+            options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
+          />
+          <RootStack.Screen
+            component={SignupScreen}
+            name={Route.signup}
+            options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
+          />
+        </>
+      )}
     </RootStack.Navigator>
   )
 }
