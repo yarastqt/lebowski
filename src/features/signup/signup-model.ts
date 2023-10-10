@@ -1,7 +1,9 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 
-import { $fireauth } from '@app/shared/firebase'
+import { $fireauth, $firestore } from '@app/shared/firebase'
+import { User } from '@app/shared/session'
 
 export const signupModel = (() => {
   const emailChanged = createEvent<string>()
@@ -16,10 +18,19 @@ export const signupModel = (() => {
   const $isValid = combine($formValues, (values) => Boolean(values.email && values.password))
 
   const createUserFx = attach({
-    source: [$formValues, $fireauth],
-    effect: async ([values, fireauth]) => {
+    source: [$formValues, $fireauth, $firestore],
+    effect: async ([values, fireauth, firestore]) => {
       try {
         const result = await createUserWithEmailAndPassword(fireauth, values.email, values.password)
+        const userRef = doc(firestore, 'users', result.user.uid)
+
+        await setDoc(userRef, {
+          id: result.user.uid,
+          displayName: result.user.displayName,
+          email: result.user.email,
+          createdAt: serverTimestamp(),
+          // TODO: Add extended type for User.
+        } satisfies User & { createdAt: unknown })
 
         console.log('>>> result', result)
       } catch (error) {

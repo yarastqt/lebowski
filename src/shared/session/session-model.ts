@@ -1,10 +1,12 @@
 import { attach, combine, createEvent, createStore, sample, scopeBind } from 'effector'
 import { onAuthStateChanged } from 'firebase/auth'
+import { QueryDocumentSnapshot, doc, getDoc } from 'firebase/firestore'
 
 import { scope } from '@app/shared/config'
-import { $fireauth, firebaseAttached } from '@app/shared/firebase'
+import { $fireauth, $firestore, firebaseAttached } from '@app/shared/firebase'
 
 export interface User {
+  id: string
   email: string
   displayName?: string
 }
@@ -17,11 +19,34 @@ export const sessionModel = (() => {
   const $isSignedIn = combine($user, (user) => user !== null)
 
   const attachAuthStateFx = attach({
-    source: $fireauth,
-    effect: (fireauth) => {
-      onAuthStateChanged(fireauth, (user) => {
-        if (user) {
-          scopeBind(signedIn, { scope })({ displayName: user.displayName, email: user.email })
+    source: [$fireauth, $firestore],
+    effect: ([fireauth, firestore]) => {
+      onAuthStateChanged(fireauth, async (payload) => {
+        if (payload) {
+          const userRef = doc(firestore, 'users', payload.uid).withConverter({
+            toFirestore: () => {
+              throw new Error('Not implemented')
+            },
+
+            fromFirestore: (snapshot: QueryDocumentSnapshot): User => {
+              const data = snapshot.data()
+
+              return {
+                id: data.id,
+                email: data.email,
+                displayName: data.displayName,
+              }
+            },
+          })
+          const userSnapshot = await getDoc(userRef)
+
+          if (!userSnapshot.exists()) {
+            throw new Error(`Cannot find user with uid: ${payload.uid}`)
+          }
+
+          const user = userSnapshot.data()
+
+          scopeBind(signedIn, { scope })(user)
         } else {
           scopeBind(signedOut, { scope })
         }
@@ -45,6 +70,8 @@ export const sessionModel = (() => {
   })
 
   return {
+    $user,
+
     '@@unitShape': () => ({
       isSignedIn: $isSignedIn,
       user: $user,
