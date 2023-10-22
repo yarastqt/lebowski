@@ -1,6 +1,7 @@
 import { useUnit } from 'effector-react'
 import { FC, useEffect } from 'react'
-import { Text, View } from 'react-native'
+
+import { UserList, UserListItem } from '@app/shared/ui'
 
 import { sendedInviteListModel } from '../model'
 
@@ -11,15 +12,20 @@ export const SendedInviteList: FC = () => {
     onWidgetMount()
   }, [onWidgetMount])
 
-  return (
-    <View>
-      <Text>Sended invites</Text>
+  if (invites.length === 0) {
+    return null
+  }
 
+  return (
+    <UserList title="Sended invites">
       {invites.map((invite) => (
-        <View key={invite.id}>
-          <Text style={{ color: '#fff' }}>{invite.email}</Text>
-        </View>
+        <UserListItem
+          key={invite.id}
+          description={invite.email}
+          onPress={() => null}
+          displayName={invite.email}
+        />
       ))}
-    </View>
+    </UserList>
   )
 }
