@@ -20,7 +20,7 @@ export interface BottomSheetProps {
   children: ReactNode
   isOpen: boolean
   onClose: () => void
-  title: string
+  title?: string
 }
 
 export const BottomSheet: FC<BottomSheetProps> = (props) => {
@@ -33,9 +33,9 @@ export const BottomSheet: FC<BottomSheetProps> = (props) => {
 
   useEffect(() => {
     if (isOpen) {
-      sheetRef.current.present()
+      sheetRef.current?.present()
     } else {
-      sheetRef.current.dismiss()
+      sheetRef.current?.dismiss()
     }
   }, [isOpen])
 
