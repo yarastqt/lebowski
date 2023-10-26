@@ -15,7 +15,7 @@ const inviteRevoked = createEvent<string>()
 const $invites = createStore<Invite[]>([])
 const $selectedInvite = createStore<Invite | null>(null)
 
-const subscribeToPendingInviteList = attach({
+const subscribeToPendingInviteListFx = attach({
   source: sessionModel.$user,
   effect: (user) => {
     invariant(user?.id, 'User is not defined')
@@ -37,7 +37,7 @@ const $isRevokeInvitePending = rejectOrRevokeInviteFx.pending
 
 sample({
   clock: widgetMounted,
-  target: subscribeToPendingInviteList,
+  target: subscribeToPendingInviteListFx,
 })
 
 sample({
