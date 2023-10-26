@@ -1,23 +1,32 @@
-import { attach, createEffect, createEvent, createStore, sample } from 'effector'
+import { attach, createEffect, createEvent, createStore, sample, scopeBind } from 'effector'
+import { invariant } from 'ts-invariant'
 
-import { type _Invite, api } from '@app/shared/api'
+import { type Invite, api } from '@app/shared/api'
+import { scope } from '@app/shared/config'
 import { sessionModel } from '@app/shared/session'
 
 const widgetMounted = createEvent()
-const inviteSelected = createEvent<_Invite>()
+
+const invitesUpdated = createEvent<Invite[]>()
+const inviteSelected = createEvent<Invite>()
 const selectedInviteReseted = createEvent()
 const inviteRevoked = createEvent<string>()
 
-const $invites = createStore<_Invite[]>([])
-const $selectedInvite = createStore<_Invite | null>(null)
+const $invites = createStore<Invite[]>([])
+const $selectedInvite = createStore<Invite | null>(null)
 
-const getSendedInviteListFx = attach({
+const subscribeToPendingInviteList = attach({
   source: sessionModel.$user,
-  effect: (user) =>
-    api.getSendedInviteList({
-      // @ts-expect-error (TODO: Add uid assert)
+  effect: (user) => {
+    invariant(user?.id, 'User is not defined')
+
+    api.subscribeToPendingInviteList({
       userId: user.id,
-    }),
+      onData: (invites) => {
+        scopeBind(invitesUpdated, { scope })(invites)
+      },
+    })
+  },
 })
 
 const rejectOrRevokeInviteFx = createEffect((params: { inviteId: string }) => {
@@ -28,11 +37,11 @@ const $isRevokeInvitePending = rejectOrRevokeInviteFx.pending
 
 sample({
   clock: widgetMounted,
-  target: getSendedInviteListFx,
+  target: subscribeToPendingInviteList,
 })
 
 sample({
-  clock: getSendedInviteListFx.doneData,
+  clock: invitesUpdated,
   target: $invites,
 })
 
@@ -52,7 +61,7 @@ sample({
   target: [$selectedInvite.reinit],
 })
 
-export const sendedInviteListModel = {
+export const pendingInviteListModel = {
   '@@unitShape': () => ({
     invites: $invites,
     isRevokeInvitePending: $isRevokeInvitePending,

@@ -5,7 +5,7 @@ import { $firestore } from '@app/shared/firebase'
 
 import { ApiError } from './api-error'
 import { Table } from './tables'
-import type { Invite } from './types'
+import type { InviteDocument, User } from './types'
 
 export async function getSendedInviteList(params: { userId: string }) {
   const firestore = scope.getState($firestore)
@@ -17,17 +17,17 @@ export async function getSendedInviteList(params: { userId: string }) {
   )
   const invitesSnapshot = await getDocs(invitesQuery)
 
-  const result: Invite[] = []
+  const result: User[] = []
 
   for (const doc of invitesSnapshot.docs) {
-    const invite = doc.data()
+    const invite = doc.data() as InviteDocument
     const receiverShapshot = await getDoc(invite.receiverRef)
 
     if (!receiverShapshot.exists()) {
       throw new ApiError('RECEIVER_NOT_FOUND', 'Receiver user not found')
     }
 
-    const receiver = receiverShapshot.data() as Invite
+    const receiver = receiverShapshot.data() as User
 
     result.push({
       id: doc.id,
