@@ -21,7 +21,7 @@ const subscribeToPendingInviteList = attach({
     invariant(user?.id, 'User is not defined')
 
     api.subscribeToPendingInviteList({
-      userId: user.id,
+      params: { userId: user.id },
       onData: (invites) => {
         scopeBind(invitesUpdated, { scope })(invites)
       },

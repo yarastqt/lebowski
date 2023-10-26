@@ -7,8 +7,8 @@ import { ApiError } from './api-error'
 import { Table } from './tables'
 import type { Invite, InviteDocument, User } from './types'
 
-export async function subscribeToPendingInviteList(params: {
-  userId: string
+export async function subscribeToPendingInviteList(payload: {
+  params: { userId: string }
   onData: (invites: Invite[]) => void
 }) {
   const firestore = scope.getState($firestore)
@@ -16,7 +16,7 @@ export async function subscribeToPendingInviteList(params: {
   const invitesRef = collection(firestore, Table.Invites)
   const invitesQuery = query(
     invitesRef,
-    where('receiverRef', '==', doc(firestore, Table.Users, params.userId)),
+    where('receiverRef', '==', doc(firestore, Table.Users, payload.params.userId)),
   )
 
   return onSnapshot(invitesQuery, async ({ docs }) => {
@@ -39,6 +39,6 @@ export async function subscribeToPendingInviteList(params: {
       })
     }
 
-    params.onData(result)
+    payload.onData(result)
   })
 }
