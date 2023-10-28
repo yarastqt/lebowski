@@ -7,7 +7,7 @@ import { ApiError } from './api-error'
 import { Table } from './tables'
 import { type Invite, type Relationship, RelationshipStatus, type User } from './types'
 
-export async function subscribeToPendingInviteList(payload: {
+export async function subscribeToSendedInviteList(payload: {
   params: { userId: string }
   onData: (invites: Invite[]) => void
 }) {
@@ -16,7 +16,7 @@ export async function subscribeToPendingInviteList(payload: {
   const relationshipsRef = collection(firestore, Table.Relationships)
   const relationshipsQuery = query(
     relationshipsRef,
-    where('addresseeRef', '==', doc(firestore, Table.Users, payload.params.userId)),
+    where('requesterRef', '==', doc(firestore, Table.Users, payload.params.userId)),
     where('status', '==', RelationshipStatus.Pending),
   )
 
@@ -25,18 +25,18 @@ export async function subscribeToPendingInviteList(payload: {
 
     for (const doc of docs) {
       const invite = doc.data() as Relationship
-      const requesterSnapshot = await getDoc(invite.requesterRef)
+      const addresseeSnapshot = await getDoc(invite.addresseeRef)
 
-      if (!requesterSnapshot.exists()) {
-        throw new ApiError('REQUESTER_NOT_FOUND', 'Requester user not found')
+      if (!addresseeSnapshot.exists()) {
+        throw new ApiError('ADDRESSEE_NOT_FOUND', 'Addressee user not found')
       }
 
-      const requester = requesterSnapshot.data() as User
+      const addressee = addresseeSnapshot.data() as User
 
       result.push({
         id: doc.id,
-        displayName: requester.displayName,
-        email: requester.email,
+        displayName: addressee.displayName,
+        email: addressee.email,
       })
     }
 

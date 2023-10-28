@@ -8,8 +8,10 @@ import { Table } from './tables'
 export async function rejectOrRevokeInvite(params: { inviteId: string }) {
   const firestore = scope.getState($firestore)
 
-  const inviteRef = doc(firestore, Table.Invites, params.inviteId)
-  await deleteDoc(inviteRef)
+  // TOOD: Check for relationship is exists.
+  const relationshipRef = doc(firestore, Table.Relationships, params.inviteId)
+
+  await deleteDoc(relationshipRef)
 
   return params.inviteId
 }

@@ -1,4 +1,4 @@
 export enum Table {
   Users = 'users',
-  Invites = 'invites',
+  Relationships = 'relationships',
 }

@@ -8,9 +8,11 @@ import { sessionModel } from '@app/shared/session'
 const widgetMounted = createEvent()
 
 const invitesUpdated = createEvent<Invite[]>()
-const inviteSelected = createEvent<Invite>()
 const selectedInviteReseted = createEvent()
-const inviteRevoked = createEvent<string>()
+
+const selectInvitePress = createEvent<Invite>()
+const acceptInvitePressed = createEvent()
+const revokeInvitePressed = createEvent()
 
 const $invites = createStore<Invite[]>([])
 const $selectedInvite = createStore<Invite | null>(null)
@@ -27,6 +29,10 @@ const subscribeToPendingInviteListFx = attach({
       },
     })
   },
+})
+
+const acceptInviteFx = createEffect((params: { inviteId: string }) => {
+  return api.acceptInvite(params)
 })
 
 const rejectOrRevokeInviteFx = createEffect((params: { inviteId: string }) => {
@@ -46,14 +52,24 @@ sample({
 })
 
 sample({
-  clock: inviteSelected,
+  clock: selectInvitePress,
   target: $selectedInvite,
 })
 
 sample({
-  clock: inviteRevoked,
-  fn: (inviteId) => ({ inviteId }),
+  clock: revokeInvitePressed,
+  source: $selectedInvite,
+  filter: Boolean,
+  fn: (invite) => ({ inviteId: invite.id }),
   target: rejectOrRevokeInviteFx,
+})
+
+sample({
+  clock: acceptInvitePressed,
+  source: $selectedInvite,
+  filter: Boolean,
+  fn: ({ id }) => ({ inviteId: id }),
+  target: acceptInviteFx,
 })
 
 sample({
@@ -65,9 +81,10 @@ export const pendingInviteListModel = {
   '@@unitShape': () => ({
     invites: $invites,
     isRevokeInvitePending: $isRevokeInvitePending,
-    onInviteRevoke: inviteRevoked,
-    onInviteSelect: inviteSelected,
+    onAcceptInvitePress: acceptInvitePressed,
+    onRevokeInvitePress: revokeInvitePressed,
     onSelectedInviteReset: selectedInviteReseted,
+    onSelectInvitePress: selectInvitePress,
     onWidgetMount: widgetMounted,
     selectedInvite: $selectedInvite,
   }),

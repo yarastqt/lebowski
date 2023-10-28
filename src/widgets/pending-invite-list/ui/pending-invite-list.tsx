@@ -9,9 +9,10 @@ export const PendingInviteList: FC = () => {
   const {
     invites,
     isRevokeInvitePending,
-    onInviteRevoke,
-    onInviteSelect,
+    onAcceptInvitePress,
+    onRevokeInvitePress,
     onSelectedInviteReset,
+    onSelectInvitePress,
     onWidgetMount,
     selectedInvite,
   } = useUnit(pendingInviteListModel)
@@ -30,7 +31,7 @@ export const PendingInviteList: FC = () => {
         <UserListItem
           key={invite.id}
           description={invite.email}
-          onPress={() => onInviteSelect(invite)}
+          onPress={() => onSelectInvitePress(invite)}
           displayName={invite.email}
         />
       ))}
@@ -41,14 +42,10 @@ export const PendingInviteList: FC = () => {
         title={selectedInvite?.displayName}
       >
         <Group>
-          <ActionButton isPending={isRevokeInvitePending} onPress={() => null}>
+          <ActionButton isPending={isRevokeInvitePending} onPress={onAcceptInvitePress}>
             Accept invite
           </ActionButton>
-          <ActionButton
-            isPending={isRevokeInvitePending}
-            // @ts-expect-error (TODO: Create component with content)
-            onPress={() => onInviteRevoke(selectedInvite?.id)}
-          >
+          <ActionButton isPending={isRevokeInvitePending} onPress={onRevokeInvitePress}>
             Reject invite
           </ActionButton>
         </Group>

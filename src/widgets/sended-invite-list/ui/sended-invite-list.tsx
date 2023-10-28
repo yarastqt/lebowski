@@ -9,9 +9,9 @@ export const SendedInviteList: FC = () => {
   const {
     invites,
     isRevokeInvitePending,
-    onInviteRevoke,
-    onInviteSelect,
+    onRevokeInvitePress,
     onSelectedInviteReset,
+    onSelectInvitePress,
     onWidgetMount,
     selectedInvite,
   } = useUnit(sendedInviteListModel)
@@ -30,7 +30,7 @@ export const SendedInviteList: FC = () => {
         <UserListItem
           key={invite.id}
           description={invite.email}
-          onPress={() => onInviteSelect(invite)}
+          onPress={() => onSelectInvitePress(invite)}
           displayName={invite.email}
         />
       ))}
@@ -40,11 +40,7 @@ export const SendedInviteList: FC = () => {
         onClose={onSelectedInviteReset}
         title={selectedInvite?.displayName}
       >
-        <ActionButton
-          isPending={isRevokeInvitePending}
-          // @ts-expect-error (TODO: Create component with content)
-          onPress={() => onInviteRevoke(selectedInvite?.id)}
-        >
+        <ActionButton isPending={isRevokeInvitePending} onPress={onRevokeInvitePress}>
           Revoke invite
         </ActionButton>
       </BottomSheet>

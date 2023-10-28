@@ -6,8 +6,11 @@ import { $firestore } from '@app/shared/firebase'
 import { ApiError } from './api-error'
 import { getUserByEmail } from './get-user-by-email'
 import { Table } from './tables'
+import { RelationshipStatus } from './types'
 
 export async function sendInvite(params: { senderId: string; receiverEmail: string }) {
+  const firestore = scope.getState($firestore)
+
   // TODO: Add check for invite already sended.
   // TODO: Add check for user already friend.
   const receiverUser = await getUserByEmail({ email: params.receiverEmail })
@@ -16,13 +19,12 @@ export async function sendInvite(params: { senderId: string; receiverEmail: stri
     throw new ApiError('SELF_INVITE', 'Cannot send invite to self')
   }
 
-  const firestore = scope.getState($firestore)
+  const relationshipsRef = collection(firestore, Table.Relationships)
 
-  const ref = collection(firestore, Table.Invites)
-
-  await addDoc(ref, {
-    senderRef: doc(firestore, Table.Users, params.senderId),
-    receiverRef: doc(firestore, Table.Users, receiverUser.id),
+  return addDoc(relationshipsRef, {
+    requesterRef: doc(firestore, Table.Users, params.senderId),
+    addresseeRef: doc(firestore, Table.Users, receiverUser.id),
     createdAt: serverTimestamp(),
+    status: RelationshipStatus.Pending,
   })
 }
