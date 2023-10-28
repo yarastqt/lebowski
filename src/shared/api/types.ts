@@ -17,6 +17,12 @@ export interface Invite {
   displayName: string
 }
 
+export interface Friend {
+  id: string
+  email: string
+  displayName: string
+}
+
 export interface Relationship {
   addresseeRef: DocumentReference
   requesterRef: DocumentReference

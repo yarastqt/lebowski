@@ -8,6 +8,7 @@ import { pendingInviteListModel } from '../model'
 export const PendingInviteList: FC = () => {
   const {
     invites,
+    isAcceptInvitePending,
     isRevokeInvitePending,
     onAcceptInvitePress,
     onRevokeInvitePress,
@@ -42,7 +43,7 @@ export const PendingInviteList: FC = () => {
         title={selectedInvite?.displayName}
       >
         <Group>
-          <ActionButton isPending={isRevokeInvitePending} onPress={onAcceptInvitePress}>
+          <ActionButton isPending={isAcceptInvitePending} onPress={onAcceptInvitePress}>
             Accept invite
           </ActionButton>
           <ActionButton isPending={isRevokeInvitePending} onPress={onRevokeInvitePress}>

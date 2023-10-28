@@ -7,12 +7,12 @@ import { sessionModel } from '@app/shared/session'
 
 const widgetMounted = createEvent()
 
-const invitesUpdated = createEvent<Invite[]>()
 const selectedInviteReseted = createEvent()
-
-const selectInvitePress = createEvent<Invite>()
+const selectInvitePressed = createEvent<Invite>()
 const acceptInvitePressed = createEvent()
 const revokeInvitePressed = createEvent()
+
+const invitesUpdated = createEvent<Invite[]>()
 
 const $invites = createStore<Invite[]>([])
 const $selectedInvite = createStore<Invite | null>(null)
@@ -40,6 +40,7 @@ const rejectOrRevokeInviteFx = createEffect((params: { inviteId: string }) => {
 })
 
 const $isRevokeInvitePending = rejectOrRevokeInviteFx.pending
+const $isAcceptInvitePending = acceptInviteFx.pending
 
 sample({
   clock: widgetMounted,
@@ -52,7 +53,7 @@ sample({
 })
 
 sample({
-  clock: selectInvitePress,
+  clock: selectInvitePressed,
   target: $selectedInvite,
 })
 
@@ -80,11 +81,12 @@ sample({
 export const pendingInviteListModel = {
   '@@unitShape': () => ({
     invites: $invites,
+    isAcceptInvitePending: $isAcceptInvitePending,
     isRevokeInvitePending: $isRevokeInvitePending,
     onAcceptInvitePress: acceptInvitePressed,
     onRevokeInvitePress: revokeInvitePressed,
     onSelectedInviteReset: selectedInviteReseted,
-    onSelectInvitePress: selectInvitePress,
+    onSelectInvitePress: selectInvitePressed,
     onWidgetMount: widgetMounted,
     selectedInvite: $selectedInvite,
   }),

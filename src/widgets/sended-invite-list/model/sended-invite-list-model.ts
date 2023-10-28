@@ -7,11 +7,11 @@ import { sessionModel } from '@app/shared/session'
 
 const widgetMounted = createEvent()
 
-const invitesUpdated = createEvent<Invite[]>()
 const selectedInviteReseted = createEvent()
-
-const selectInvitePress = createEvent<Invite>()
+const selectInvitePressed = createEvent<Invite>()
 const revokeInvitePressed = createEvent()
+
+const invitesUpdated = createEvent<Invite[]>()
 
 const $invites = createStore<Invite[]>([])
 const $selectedInvite = createStore<Invite | null>(null)
@@ -47,7 +47,7 @@ sample({
 })
 
 sample({
-  clock: selectInvitePress,
+  clock: selectInvitePressed,
   target: $selectedInvite,
 })
 
@@ -70,7 +70,7 @@ export const sendedInviteListModel = {
     isRevokeInvitePending: $isRevokeInvitePending,
     onRevokeInvitePress: revokeInvitePressed,
     onSelectedInviteReset: selectedInviteReseted,
-    onSelectInvitePress: selectInvitePress,
+    onSelectInvitePress: selectInvitePressed,
     onWidgetMount: widgetMounted,
     selectedInvite: $selectedInvite,
   }),

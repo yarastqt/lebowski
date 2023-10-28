@@ -3,6 +3,7 @@ import { Text } from 'react-native'
 
 import { SendInviteForm } from '@app/features/send-invite'
 import { MainLayout } from '@app/layouts/main-layout'
+import { FriendList } from '@app/widgets/friend-list'
 import { PendingInviteList } from '@app/widgets/pending-invite-list'
 import { SendedInviteList } from '@app/widgets/sended-invite-list'
 
@@ -13,6 +14,7 @@ export const PeopleScreen: FC = () => {
       <SendInviteForm />
       <PendingInviteList />
       <SendedInviteList />
+      <FriendList />
     </MainLayout>
   )
 }

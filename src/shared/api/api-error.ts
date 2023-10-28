@@ -3,3 +3,8 @@ export class ApiError extends Error {
     super(message)
   }
 }
+
+export enum ApiErrorCode {
+  AddresseeNotFound = 'ADDRESSEE_NOT_FOUND',
+  RequesterNotFound = 'REQUESTER_NOT_FOUND',
+}

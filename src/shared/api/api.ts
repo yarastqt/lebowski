@@ -1,5 +1,6 @@
 export * from './accept-invite'
 export * from './reject-or-revoke-invite'
 export * from './send-invite'
+export * from './subscribe-to-friend-list'
 export * from './subscribe-to-pending-invite-list'
 export * from './subscribe-to-sended-invite-list'
