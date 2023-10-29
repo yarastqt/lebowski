@@ -1,1 +1,1 @@
-export { SendInviteForm } from './ui/send-invite-form'
+export { SendInviteButton } from './ui/send-invite-button'

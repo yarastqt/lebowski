@@ -1,11 +1,14 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
+import invariant from 'ts-invariant'
 
 import { api } from '@app/shared/api'
+import { createDialog } from '@app/shared/lib/dialog'
 import { sessionModel } from '@app/shared/session'
 
+const dialog = createDialog()
+
 const emailChanged = createEvent<string>()
-const sendInvitePressed = createEvent()
-const reset = createEvent()
+const sendInviteSubmitted = createEvent()
 
 const $email = createStore('')
 
@@ -15,7 +18,12 @@ const $isValid = combine($formValues, (values) => Boolean(values.email))
 const sendInviteFx = attach({
   source: [$formValues, sessionModel.$user],
   effect: ([formValues, user]) => {
-    return api.sendInvite({ senderId: user.id, receiverEmail: formValues.email })
+    invariant(user?.id, 'User is not defined')
+
+    return api.sendInvite({
+      senderId: user.id,
+      receiverEmail: formValues.email,
+    })
   },
 })
 
@@ -27,7 +35,7 @@ sample({
 })
 
 sample({
-  clock: sendInvitePressed,
+  clock: sendInviteSubmitted,
   source: [$isPending, $isValid],
   // TODO: Add validation.
   filter: ([isPending, isValid]) => !isPending && isValid,
@@ -35,7 +43,12 @@ sample({
 })
 
 sample({
-  clock: reset,
+  clock: sendInviteFx.done,
+  target: dialog.close,
+})
+
+sample({
+  clock: dialog.close,
   target: [$email.reinit],
 })
 
@@ -48,12 +61,12 @@ sendInviteFx.failData.watch((error) => {
 })
 
 export const sendInviteModel = {
+  dialog,
   '@@unitShape': () => ({
     email: $email,
     isPending: $isPending,
     isValid: $isValid,
     onEmailChange: emailChanged,
-    screenUnmounted: reset,
-    sendInvitePress: sendInvitePressed,
+    sendInviteSubmit: sendInviteSubmitted,
   }),
 }
