@@ -13,6 +13,7 @@ export const SendInviteDialog: FC = () => {
     <BottomSheet isOpen={isOpen} onClose={onClose} title="Add friend">
       <Group>
         <TextField
+          autoFocus
           keyboardType="email-address"
           label="Email"
           onChange={onEmailChange}
