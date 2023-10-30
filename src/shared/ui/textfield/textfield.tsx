@@ -15,7 +15,7 @@ import { createStyles, useTheme } from '@app/shared/theme'
 import { IconButton } from '../icon-button'
 
 export interface TextFieldProps
-  extends Pick<TextInputProps, 'secureTextEntry' | 'keyboardType' | 'value'> {
+  extends Pick<TextInputProps, 'secureTextEntry' | 'keyboardType' | 'value' | 'autoFocus'> {
   label: string
   onChange: (value: string) => void
 }
