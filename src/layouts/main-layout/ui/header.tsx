@@ -1,7 +1,6 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { SendInviteButton } from '@app/features/send-invite'
 import { CircleGroupOutline } from '@app/shared/icons'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
@@ -9,7 +8,13 @@ import { IconButton } from '@app/shared/ui'
 
 import { Logo } from './logo'
 
-export const Header: FC = () => {
+export interface HeaderProps {
+  actions?: ReactNode
+}
+
+export const Header: FC<HeaderProps> = (props) => {
+  const { actions } = props
+
   const navigation = useNavigation()
   const styles = useStyles()
 
@@ -22,7 +27,7 @@ export const Header: FC = () => {
       <Logo />
 
       <View style={styles.actions}>
-        <SendInviteButton />
+        {actions}
 
         <IconButton size={44} onPress={onSettingsPress}>
           <CircleGroupOutline size={24} />
