@@ -11,6 +11,7 @@ import Animated, {
 
 import { EyeOffOutline, EyeOutline } from '@app/shared/icons'
 import { createStyles, useTheme } from '@app/shared/theme'
+import { useBottomSheetInternal } from '@gorhom/bottom-sheet'
 
 import { IconButton } from '../icon-button'
 
@@ -23,6 +24,8 @@ export interface TextFieldProps
 export const TextField: FC<TextFieldProps> = (props) => {
   const { label, onChange, value, secureTextEntry, ...otherProps } = props
 
+  const bottomSheetInternal = useBottomSheetInternal(true)
+
   const theme = useTheme()
   const styles = useStyles()
 
@@ -33,11 +36,19 @@ export const TextField: FC<TextFieldProps> = (props) => {
   const labelPosition = useSharedValue(0)
 
   const onFocus = () => {
+    if (bottomSheetInternal) {
+      bottomSheetInternal.shouldHandleKeyboardEvents.value = true
+    }
+
     borderColor.value = withSpring(1)
     labelPosition.value = withSpring(1)
   }
 
   const onBlur = () => {
+    if (bottomSheetInternal) {
+      bottomSheetInternal.shouldHandleKeyboardEvents.value = false
+    }
+
     borderColor.value = withSpring(0)
     labelPosition.value = withSpring(value ? 1 : 0, {
       stiffness: 180,
