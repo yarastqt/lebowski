@@ -50,7 +50,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
 
     setSecureText(!isSecureText)
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }
 
   const rootStyles = useAnimatedStyle(() => ({
