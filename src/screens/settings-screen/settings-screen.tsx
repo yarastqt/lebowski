@@ -1,12 +1,25 @@
 import { FC } from 'react'
-import { Text } from 'react-native'
+import { View } from 'react-native'
 
 import { ScreenLayout } from '@app/layouts/screen-layout'
+import { createStyles } from '@app/shared/theme'
+
+import { AppVersion } from './ui/app-version'
 
 export const SettingsScreen: FC = () => {
+  const styles = useStyles()
+
   return (
     <ScreenLayout title="Settings">
-      <Text style={{ color: '#fff' }}>settings screen</Text>
+      <View style={styles.footer}>
+        <AppVersion />
+      </View>
     </ScreenLayout>
   )
 }
+
+const useStyles = createStyles(() => ({
+  footer: {
+    marginTop: 'auto',
+  },
+}))
