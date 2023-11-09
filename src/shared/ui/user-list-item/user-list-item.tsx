@@ -9,6 +9,8 @@ import Animated, {
 
 import { createStyles, useTheme } from '@app/shared/theme'
 
+import { Avatar } from '../avatar'
+
 export interface UserListItemProps {
   description: string
   onPress: () => void
@@ -42,9 +44,8 @@ export const UserListItem: FC<UserListItemProps> = (props) => {
   return (
     <Pressable onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut}>
       <Animated.View style={[styles.root, rootStyles]}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{getAvatarText(displayName)}</Text>
-        </View>
+        <Avatar size={48} displayName={displayName} />
+
         <View style={styles.heading}>
           <Text style={styles.title}>{displayName}</Text>
           <Text style={styles.description}>{description}</Text>
@@ -64,21 +65,6 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 20,
   },
 
-  avatar: {
-    height: 48,
-    width: 48,
-    backgroundColor: theme.color.statusPositive,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  avatarText: {
-    ...theme.typography.headingM,
-    color: theme.color.textPrimary,
-    lineHeight: 50,
-  },
-
   heading: {
     gap: 2,
   },
@@ -93,7 +79,3 @@ const useStyles = createStyles((theme) => ({
     color: theme.color.textSecondary,
   },
 }))
-
-function getAvatarText(displayName: string) {
-  return displayName.at(0).toLocaleUpperCase()
-}
