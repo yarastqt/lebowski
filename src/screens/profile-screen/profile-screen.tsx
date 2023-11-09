@@ -1,12 +1,12 @@
 import { FC } from 'react'
-import { Text } from 'react-native'
 
 import { MainLayout } from '@app/layouts/main-layout'
+import { ProfileInfo } from '@app/widgets/profile-info'
 
 export const ProfileScreen: FC = () => {
   return (
     <MainLayout>
-      <Text style={{ color: '#fff' }}>profile screen</Text>
+      <ProfileInfo />
     </MainLayout>
   )
 }
