@@ -1,4 +1,5 @@
 export * from './action-button'
+export * from './avatar'
 export * from './bottom-sheet'
 export * from './group'
 export * from './icon-button'
