@@ -66,7 +66,7 @@ export const sessionModel = (() => {
 
   sample({
     clock: signedOut,
-    target: $user.reinit,
+    target: [$user.reinit],
   })
 
   return {
