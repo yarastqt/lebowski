@@ -8,7 +8,7 @@ import { $fireauth, $firestore, firebaseAttached } from '@app/shared/firebase'
 export interface User {
   id: string
   email: string
-  displayName?: string
+  displayName: string
 }
 
 export const sessionModel = (() => {
