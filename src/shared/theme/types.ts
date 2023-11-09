@@ -8,6 +8,7 @@ export interface Color {
   brandBgPressed: string
   brandTextOn: string
   mutedBg: string
+  defaultBgBase: string
   defaultBgPressed: string
 
   defaultBorder: string

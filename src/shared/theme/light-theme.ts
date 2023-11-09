@@ -9,6 +9,8 @@ export const lightTheme: Theme = {
     brandBgPressed: 'rgba(20, 20, 25, 0.9)',
     brandTextOn: 'rgba(255, 253, 250, 1)',
     mutedBg: '',
+
+    defaultBgBase: '',
     defaultBgPressed: '',
 
     defaultBorder: '',

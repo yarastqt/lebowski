@@ -9,6 +9,7 @@ export const darkTheme: Theme = {
     brandBgPressed: 'rgba(255, 253, 250, 0.9)',
     brandTextOn: 'rgba(20, 20, 25, 1)',
 
+    defaultBgBase: 'rgba(250, 250, 255, 0.08)',
     defaultBgPressed: 'rgba(250, 250, 255, 0.14)',
 
     mutedBg: 'rgba(250, 250, 255, 0.06)',
@@ -22,7 +23,7 @@ export const darkTheme: Theme = {
     surfaceSubmerged: 'rgba(18, 18, 18, 1)',
     surfaceOverlay: 'rgba(14, 14, 15, 0.88)',
 
-    statusPositive: 'rgba(0, 214, 168, 1)',
+    statusPositive: 'rgba(116, 214, 194, 1)',
 
     textPrimary: 'rgba(255, 253, 250, 1)',
     textSecondary: 'rgba(255, 253, 250, 0.5)',
