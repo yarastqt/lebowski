@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { CreateDebtDialog, createDebtModel } from '@app/features/create-debt'
 import { CreditCardPlusOutline } from '@app/shared/icons'
+import { Route } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 
@@ -14,7 +15,6 @@ export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
   const { descriptors, navigation, state } = props
   const safeAriaInsets = useSafeAreaInsets()
   const styles = useStyles()
-  const { open } = useUnit(createDebtModel)
 
   const buttons = state.routes.map((route, index) => {
     const { options } = descriptors[route.key]
@@ -40,16 +40,18 @@ export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
   })
 
   return (
-    <>
-      <View style={[styles.root, { bottom: safeAriaInsets.bottom }]}>
-        {buttons}
-        <BottomNavigationButton icon={CreditCardPlusOutline} isActive={false} onPress={open}>
-          New debt
-        </BottomNavigationButton>
-      </View>
-
-      <CreateDebtDialog />
-    </>
+    <View style={[styles.root, { bottom: safeAriaInsets.bottom }]}>
+      {buttons}
+      <BottomNavigationButton
+        icon={CreditCardPlusOutline}
+        isActive={false}
+        onPress={() => {
+          navigation.navigate(Route.createDebt)
+        }}
+      >
+        New debt
+      </BottomNavigationButton>
+    </View>
   )
 }
 

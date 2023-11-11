@@ -8,6 +8,7 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack'
 
+import { CreateDebtScreen } from './create-debt-screen'
 import { MainScreens } from './main-screens'
 import { SettingsScreen } from './settings-screen'
 import { SignInScreen } from './signin-screen'
@@ -25,30 +26,19 @@ export const RootScreens: FC = () => {
     <RootStack.Navigator>
       {isSignedIn ? (
         <>
-          <RootStack.Screen
-            component={MainScreens}
-            name={Route.root}
-            options={DEFAULT_SCREEN_OPTIONS}
-          />
-          <RootStack.Screen
-            component={SettingsScreen}
-            name={Route.settings}
-            options={DEFAULT_SCREEN_OPTIONS}
-          />
+          <RootStack.Group screenOptions={DEFAULT_SCREEN_OPTIONS}>
+            <RootStack.Screen component={MainScreens} name={Route.root} />
+            <RootStack.Screen component={SettingsScreen} name={Route.settings} />
+          </RootStack.Group>
+          <RootStack.Group screenOptions={{ ...DEFAULT_SCREEN_OPTIONS, presentation: 'modal' }}>
+            <RootStack.Screen component={CreateDebtScreen} name={Route.createDebt} />
+          </RootStack.Group>
         </>
       ) : (
-        <>
-          <RootStack.Screen
-            component={SignInScreen}
-            name={Route.signin}
-            options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
-          />
-          <RootStack.Screen
-            component={SignupScreen}
-            name={Route.signup}
-            options={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}
-          />
-        </>
+        <RootStack.Group screenOptions={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}>
+          <RootStack.Screen component={SignInScreen} name={Route.signin} />
+          <RootStack.Screen component={SignupScreen} name={Route.signup} />
+        </RootStack.Group>
       )}
     </RootStack.Navigator>
   )

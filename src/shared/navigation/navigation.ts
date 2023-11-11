@@ -7,6 +7,7 @@ export enum Route {
   debts = 'debts',
   people = 'people',
   profile = 'profile',
+  createDebt = 'createDebt',
 }
 
 export type MainTabParamList = {
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   signin: undefined
   signup: undefined
   settings: undefined
+  createDebt: undefined
 }
 
 declare global {
