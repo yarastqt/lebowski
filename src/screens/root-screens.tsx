@@ -23,19 +23,19 @@ export const RootScreens: FC = () => {
   const { isSignedIn } = useUnit(sessionModel)
 
   return (
-    <RootStack.Navigator>
+    <RootStack.Navigator screenOptions={DEFAULT_SCREEN_OPTIONS}>
       {isSignedIn ? (
         <>
-          <RootStack.Group screenOptions={DEFAULT_SCREEN_OPTIONS}>
+          <RootStack.Group>
             <RootStack.Screen component={MainScreens} name={Route.root} />
             <RootStack.Screen component={SettingsScreen} name={Route.settings} />
           </RootStack.Group>
-          <RootStack.Group screenOptions={{ ...DEFAULT_SCREEN_OPTIONS, presentation: 'modal' }}>
+          <RootStack.Group screenOptions={{ presentation: 'modal' }}>
             <RootStack.Screen component={CreateDebtScreen} name={Route.createDebt} />
           </RootStack.Group>
         </>
       ) : (
-        <RootStack.Group screenOptions={{ ...DEFAULT_SCREEN_OPTIONS, gestureEnabled: false }}>
+        <RootStack.Group screenOptions={{ gestureEnabled: false }}>
           <RootStack.Screen component={SignInScreen} name={Route.signin} />
           <RootStack.Screen component={SignupScreen} name={Route.signup} />
         </RootStack.Group>
