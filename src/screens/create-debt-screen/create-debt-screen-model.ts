@@ -2,6 +2,7 @@ import { attach, sample } from 'effector'
 
 import { Currency, api } from '@app/shared/api'
 import { createForm } from '@app/shared/lib/effector-form'
+import { navigationModel } from '@app/shared/navigation'
 
 interface FormValues {
   reciverEmail: string
@@ -35,8 +36,9 @@ sample({
   target: createDebtFx,
 })
 
-createDebtFx.done.watch(() => {
-  console.log('>>> debt created')
+sample({
+  clock: createDebtFx.done,
+  target: navigationModel.back,
 })
 
 export const createDebtScreenModel = {
