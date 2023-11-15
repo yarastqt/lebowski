@@ -1,7 +1,7 @@
 import { attach, sample } from 'effector'
 
 import { Currency, api } from '@app/shared/api'
-import { createForm } from '@app/shared/lib/effector-form'
+import { createForm, rules } from '@app/shared/lib/effector-form'
 import { navigationModel } from '@app/shared/navigation'
 
 interface FormValues {
@@ -18,6 +18,10 @@ const form = createForm<FormValues>({
     currency: Currency.Amd,
     comment: '',
   },
+  validate: rules.config(() => ({
+    reciverEmail: rules.required('Email is required'),
+    amount: rules.required('Amount is required'),
+  })),
 })
 
 const createDebtFx = attach({
