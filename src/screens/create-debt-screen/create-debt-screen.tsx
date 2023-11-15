@@ -1,5 +1,6 @@
+import { useUnit } from 'effector-react'
 import { FC } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
@@ -9,6 +10,7 @@ import { createDebtScreenModel } from './create-debt-screen-model'
 
 export const CreateDebtScreen: FC = () => {
   const { fields, submit } = useForm(createDebtScreenModel.form)
+  const { isPending } = useUnit(createDebtScreenModel)
 
   return (
     <BaseLayout>
@@ -17,7 +19,9 @@ export const CreateDebtScreen: FC = () => {
         <TextField {...fields.amount.props} label="Amount" />
         <TextField {...fields.comment.props} label="Comment" />
 
-        <ActionButton onPress={submit}>Create</ActionButton>
+        <ActionButton onPress={submit} isPending={isPending}>
+          {isPending ? 'Creating...' : 'Create'}
+        </ActionButton>
       </View>
     </BaseLayout>
   )

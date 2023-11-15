@@ -35,6 +35,8 @@ const createDebtFx = attach({
     }),
 })
 
+const $isPending = createDebtFx.pending
+
 sample({
   clock: form.validated,
   target: createDebtFx,
@@ -45,6 +47,14 @@ sample({
   target: navigationModel.back,
 })
 
+createDebtFx.failData.watch((error) => {
+  console.log('>>> error', error)
+})
+
 export const createDebtScreenModel = {
   form,
+
+  '@@unitShape': () => ({
+    isPending: $isPending,
+  }),
 }
