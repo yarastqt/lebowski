@@ -1,7 +1,7 @@
 import { useUnit } from 'effector-react'
 import { FC } from 'react'
 
-import { RootStackParamList, Route } from '@app/shared/navigation'
+import { RootStackParamList, Route, useAttachNavigation } from '@app/shared/navigation'
 import { sessionModel } from '@app/shared/session'
 import {
   NativeStackNavigationOptions,
@@ -21,6 +21,8 @@ const DEFAULT_SCREEN_OPTIONS: NativeStackNavigationOptions = {
 
 export const RootScreens: FC = () => {
   const { isSignedIn } = useUnit(sessionModel)
+
+  useAttachNavigation()
 
   return (
     <RootStack.Navigator screenOptions={DEFAULT_SCREEN_OPTIONS}>
