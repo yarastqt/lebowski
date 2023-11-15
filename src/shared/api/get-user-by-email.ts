@@ -1,4 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import invariant from 'ts-invariant'
 
 import { scope } from '@app/shared/config'
 import { $firestore } from '@app/shared/firebase'
@@ -23,10 +24,14 @@ export async function getUserByEmail(params: { email: string }) {
   }
 
   if (snapshot.empty) {
-    throw new ApiError('NOT_FOUND', `User with email " ${params.email}" not found`)
+    throw new ApiError('NOT_FOUND', `User with email "${params.email}" not found`)
   }
 
-  const user = snapshot.docs.at(0).data()
+  const userDocument = snapshot.docs.at(0)
+
+  invariant(userDocument)
+
+  const user = userDocument.data()
 
   return { id: user.id, email: user.email } satisfies User
 }
