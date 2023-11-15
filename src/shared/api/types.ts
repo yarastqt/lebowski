@@ -5,6 +5,18 @@ export enum RelationshipStatus {
   Accepted = 'accepted',
 }
 
+export enum Currency {
+  Rub = 'rub',
+  Usd = 'usd',
+  Amd = 'amd',
+}
+
+export enum DebtStatus {
+  Pending = 'pending',
+  Accepted = 'accepted',
+  Completed = 'completed',
+}
+
 export interface User {
   id: string
   email: string
