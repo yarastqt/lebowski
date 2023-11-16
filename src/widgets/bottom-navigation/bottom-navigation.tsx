@@ -1,9 +1,7 @@
-import { useUnit } from 'effector-react'
 import { FC } from 'react'
-import { View } from 'react-native'
+import Animated, { FadeInDown } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { CreateDebtDialog, createDebtModel } from '@app/features/create-debt'
 import { CreditCardPlusOutline } from '@app/shared/icons'
 import { Route } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
@@ -40,7 +38,10 @@ export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
   })
 
   return (
-    <View style={[styles.root, { bottom: safeAriaInsets.bottom }]}>
+    <Animated.View
+      style={[styles.root, { bottom: safeAriaInsets.bottom }]}
+      entering={FadeInDown.delay(300).springify()}
+    >
       {buttons}
       <BottomNavigationButton
         icon={CreditCardPlusOutline}
@@ -51,7 +52,7 @@ export const BottomNavigation: FC<BottomTabBarProps> = (props) => {
       >
         New debt
       </BottomNavigationButton>
-    </View>
+    </Animated.View>
   )
 }
 
