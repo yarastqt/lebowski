@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react'
 import { KeyboardAvoidingView, View } from 'react-native'
 
 import { createStyles } from '@app/shared/theme'
-import { ActionButton, TextField } from '@app/shared/ui'
+import { ActionButton, Group, TextField } from '@app/shared/ui'
 
 import { signupModel } from '../signup-model'
 
@@ -27,20 +27,22 @@ export const SignupForm: FC = () => {
 
   return (
     <View style={styles.root}>
-      <KeyboardAvoidingView behavior="padding" style={styles.content}>
-        <TextField
-          keyboardType="email-address"
-          label="Email"
-          onChange={onEmailChange}
-          value={email}
-        />
-        <TextField
-          keyboardType="ascii-capable"
-          label="Password"
-          onChange={onPasswordChange}
-          secureTextEntry
-          value={password}
-        />
+      <KeyboardAvoidingView behavior="padding">
+        <Group>
+          <TextField
+            keyboardType="email-address"
+            label="Email"
+            onChange={onEmailChange}
+            value={email}
+          />
+          <TextField
+            keyboardType="ascii-capable"
+            label="Password"
+            onChange={onPasswordChange}
+            secureTextEntry
+            value={password}
+          />
+        </Group>
       </KeyboardAvoidingView>
 
       <View style={styles.button}>
@@ -55,13 +57,6 @@ export const SignupForm: FC = () => {
 const useStyles = createStyles(() => ({
   root: {
     flex: 1,
-  },
-
-  content: {
-    marginTop: 'auto',
-    gap: 16,
-    flex: 1,
-    justifyContent: 'center',
   },
 
   button: {

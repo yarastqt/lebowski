@@ -5,7 +5,7 @@ import { SignInByPasswordForm } from '@app/features/sign-in-by-password'
 import { BaseLayout } from '@app/layouts/base-layout'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
-import { IconButton } from '@app/shared/ui'
+import { IconButton, Logo } from '@app/shared/ui'
 
 export const SignInScreen: FC = () => {
   const styles = useStyles()
@@ -13,6 +13,10 @@ export const SignInScreen: FC = () => {
 
   return (
     <BaseLayout>
+      <View style={styles.logo}>
+        <Logo width={190} height={48} />
+      </View>
+
       <SignInByPasswordForm />
 
       <View style={styles.signupContainer}>
@@ -27,6 +31,11 @@ export const SignInScreen: FC = () => {
 }
 
 const useStyles = createStyles((theme) => ({
+  logo: {
+    alignItems: 'center',
+    marginTop: 128,
+  },
+
   signupContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
