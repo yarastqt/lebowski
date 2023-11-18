@@ -14,9 +14,11 @@ export interface User {
 export const sessionModel = (() => {
   const signedIn = createEvent<User>()
   const signedOut = createEvent()
+  const loadComplete = createEvent()
 
   const $user = createStore<User | null>(null)
   const $isSignedIn = combine($user, (user) => user !== null)
+  const $isLoaded = createStore(false)
 
   const attachAuthStateFx = attach({
     source: [$fireauth, $firestore],
@@ -50,6 +52,8 @@ export const sessionModel = (() => {
         } else {
           scopeBind(signedOut, { scope })()
         }
+
+        scopeBind(loadComplete, { scope })()
       })
     },
   })
@@ -65,6 +69,12 @@ export const sessionModel = (() => {
   })
 
   sample({
+    clock: loadComplete,
+    fn: () => true,
+    target: $isLoaded,
+  })
+
+  sample({
     clock: signedOut,
     target: [$user.reinit],
   })
@@ -73,6 +83,7 @@ export const sessionModel = (() => {
     $user,
 
     '@@unitShape': () => ({
+      isSessionLoaded: $isLoaded,
       isSignedIn: $isSignedIn,
       user: $user,
     }),
