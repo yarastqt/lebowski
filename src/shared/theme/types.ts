@@ -30,27 +30,17 @@ export interface Color {
   transparent: string
 }
 
+export interface TypographyParams {
+  fontFamily: string
+  lineHeight: number
+  fontSize: number
+}
+
 export interface Typography {
-  headingM: {
-    fontFamily: string
-    lineHeight: number
-    fontSize: number
-  }
-  textS: {
-    fontFamily: string
-    lineHeight: number
-    fontSize: number
-  }
-  textM: {
-    fontFamily: string
-    lineHeight: number
-    fontSize: number
-  }
-  textL: {
-    fontFamily: string
-    lineHeight: number
-    fontSize: number
-  }
+  headingM: TypographyParams
+  textS: TypographyParams
+  textM: TypographyParams
+  textL: TypographyParams
 }
 
 export interface Shadow {
