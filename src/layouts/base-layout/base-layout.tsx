@@ -1,23 +1,24 @@
 import { StatusBar } from 'expo-status-bar'
 import { FC, ReactNode } from 'react'
 import { View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Edges, SafeAreaView } from 'react-native-safe-area-context'
 
 import { createStyles, useTheme } from '@app/shared/theme'
 
 export interface BaseLayoutProps {
   children: ReactNode
+  edgets?: Edges
   header?: ReactNode
 }
 
 export const BaseLayout: FC<BaseLayoutProps> = (props) => {
-  const { children, header } = props
+  const { children, edgets, header } = props
 
   const { colorScheme } = useTheme()
   const styles = useStyles()
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={styles.root} edges={edgets}>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
       {header}
       <View style={styles.content}>{children}</View>
