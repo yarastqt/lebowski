@@ -62,7 +62,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     gap: 16,
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 16,
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
