@@ -4,9 +4,7 @@ import { View } from 'react-native'
 import { CircleGroupOutline } from '@app/shared/icons'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
-import { IconButton } from '@app/shared/ui'
-
-import { Logo } from './logo'
+import { IconButton, Logo } from '@app/shared/ui'
 
 export interface HeaderProps {
   actions?: ReactNode
