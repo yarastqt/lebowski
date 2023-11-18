@@ -21,6 +21,7 @@ export interface Color {
   surfaceOverlay: string
 
   statusPositive: string
+  statusNegative: string
 
   textPrimary: string
   textSecondary: string

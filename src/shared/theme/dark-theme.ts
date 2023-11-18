@@ -24,6 +24,7 @@ export const darkTheme: Theme = {
     surfaceOverlay: 'rgba(14, 14, 15, 0.88)',
 
     statusPositive: 'rgba(116, 214, 194, 1)',
+    statusNegative: 'rgba(251, 92, 86, 1)',
 
     textPrimary: 'rgba(255, 253, 250, 1)',
     textSecondary: 'rgba(255, 253, 250, 0.5)',
