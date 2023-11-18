@@ -48,7 +48,7 @@ export const sessionModel = (() => {
 
           scopeBind(signedIn, { scope })(user)
         } else {
-          scopeBind(signedOut, { scope })
+          scopeBind(signedOut, { scope })()
         }
       })
     },
