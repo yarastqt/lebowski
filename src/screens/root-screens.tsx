@@ -37,7 +37,7 @@ export const RootScreens: FC = () => {
           </RootStack.Group>
         </>
       ) : (
-        <RootStack.Group screenOptions={{ gestureEnabled: false }}>
+        <RootStack.Group>
           <RootStack.Screen component={SignInScreen} name={Route.signin} />
           <RootStack.Screen component={SignupScreen} name={Route.signup} />
         </RootStack.Group>
