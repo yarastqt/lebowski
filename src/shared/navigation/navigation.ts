@@ -1,3 +1,5 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+
 export enum Route {
   root = 'root',
   signin = 'signin',
@@ -5,6 +7,7 @@ export enum Route {
   settings = 'settings',
   splash = 'splash',
   profile = 'profile',
+  friend = 'friend',
   createDebt = 'createDebt',
 }
 
@@ -15,7 +18,13 @@ export type RootStackParamList = {
   settings: undefined
   createDebt: undefined
   profile: undefined
+  friend: { displayName: string; id: string }
 }
+
+export type ScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<
+  RootStackParamList,
+  T
+>
 
 declare global {
   namespace ReactNavigation {

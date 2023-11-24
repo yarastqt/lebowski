@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native-stack'
 
 import { CreateDebtScreen } from './create-debt-screen'
+import { FriendScreen } from './friend-screen'
 import { MainScreen } from './main-screen'
 import { ProfileScreen } from './profile-screen'
 import { SettingsScreen } from './settings-screen'
@@ -31,6 +32,7 @@ export const RootScreens: FC = () => {
         <>
           <RootStack.Group>
             <RootStack.Screen component={MainScreen} name={Route.root} />
+            <RootStack.Screen component={FriendScreen} name={Route.friend} />
             <RootStack.Screen component={ProfileScreen} name={Route.profile} />
             <RootStack.Screen component={SettingsScreen} name={Route.settings} />
           </RootStack.Group>

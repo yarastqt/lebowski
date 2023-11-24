@@ -1,13 +1,15 @@
 import { useUnit } from 'effector-react'
 import { FC, useEffect } from 'react'
 
-import { ActionButton, BottomSheet, Group, UserList, UserListItem } from '@app/shared/ui'
+import { Route } from '@app/shared/navigation'
+import { UserList, UserListItem } from '@app/shared/ui'
+import { useNavigation } from '@react-navigation/native'
 
 import { friendListModel } from '../model'
 
 export const FriendList: FC = () => {
-  const { friends, onSelectedFriendReset, onSelectFriendPress, onWidgetMount, selectedFriend } =
-    useUnit(friendListModel)
+  const navigation = useNavigation()
+  const { friends, onWidgetMount } = useUnit(friendListModel)
 
   useEffect(() => {
     onWidgetMount()
@@ -23,20 +25,15 @@ export const FriendList: FC = () => {
         <UserListItem
           key={friend.id}
           description={friend.email}
-          onPress={() => onSelectFriendPress(friend)}
+          onPress={() => {
+            navigation.navigate(Route.friend, {
+              displayName: friend.displayName,
+              id: friend.id,
+            })
+          }}
           displayName={friend.displayName}
         />
       ))}
-
-      <BottomSheet
-        isOpen={selectedFriend !== null}
-        onClose={onSelectedFriendReset}
-        title={selectedFriend?.displayName}
-      >
-        <Group>
-          <ActionButton onPress={() => null}>Remove from friends</ActionButton>
-        </Group>
-      </BottomSheet>
     </UserList>
   )
 }
