@@ -1,24 +1,24 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 export enum Route {
-  root = 'root',
-  signin = 'signin',
-  signup = 'signup',
-  settings = 'settings',
-  splash = 'splash',
-  profile = 'profile',
-  friend = 'friend',
-  createTransaction = 'createTransaction',
+  Root = 'Root',
+  Signin = 'Signin',
+  Signup = 'Signup',
+  Settings = 'Settings',
+  Splash = 'Splash',
+  Profile = 'Profile',
+  Friend = 'Friend',
+  CreateTransaction = 'CreateTransaction',
 }
 
 export type RootStackParamList = {
-  root: undefined
-  signin: undefined
-  signup: undefined
-  settings: undefined
-  createTransaction: undefined
-  profile: undefined
-  friend: { displayName: string; id: string }
+  Root: undefined
+  Signin: undefined
+  Signup: undefined
+  Settings: undefined
+  CreateTransaction: undefined
+  Profile: undefined
+  Friend: { displayName: string; id: string }
 }
 
 export type ScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<

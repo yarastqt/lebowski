@@ -31,19 +31,19 @@ export const RootScreens: FC = () => {
       {isSignedIn ? (
         <>
           <RootStack.Group>
-            <RootStack.Screen component={MainScreen} name={Route.root} />
-            <RootStack.Screen component={FriendScreen} name={Route.friend} />
-            <RootStack.Screen component={ProfileScreen} name={Route.profile} />
-            <RootStack.Screen component={SettingsScreen} name={Route.settings} />
+            <RootStack.Screen component={MainScreen} name={Route.Root} />
+            <RootStack.Screen component={FriendScreen} name={Route.Friend} />
+            <RootStack.Screen component={ProfileScreen} name={Route.Profile} />
+            <RootStack.Screen component={SettingsScreen} name={Route.Settings} />
           </RootStack.Group>
           <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-            <RootStack.Screen component={CreateTransactionScreen} name={Route.createTransaction} />
+            <RootStack.Screen component={CreateTransactionScreen} name={Route.CreateTransaction} />
           </RootStack.Group>
         </>
       ) : (
         <RootStack.Group>
-          <RootStack.Screen component={SignInScreen} name={Route.signin} />
-          <RootStack.Screen component={SignupScreen} name={Route.signup} />
+          <RootStack.Screen component={SignInScreen} name={Route.Signin} />
+          <RootStack.Screen component={SignupScreen} name={Route.Signup} />
         </RootStack.Group>
       )}
     </RootStack.Navigator>

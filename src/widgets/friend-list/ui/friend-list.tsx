@@ -26,7 +26,7 @@ export const FriendList: FC = () => {
           key={friend.id}
           description={friend.email}
           onPress={() => {
-            navigation.navigate(Route.friend, {
+            navigation.navigate(Route.Friend, {
               displayName: friend.displayName,
               id: friend.id,
             })

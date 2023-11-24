@@ -20,7 +20,7 @@ export const ProfileScreen: FC = () => {
         <ListItem
           before={<CircleGroupOutline size={24} />}
           title="Settings"
-          onPress={() => navigation.navigate(Route.settings)}
+          onPress={() => navigation.navigate(Route.Settings)}
         />
         <ShareProfileListItem />
         <SignOutListItem />

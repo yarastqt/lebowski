@@ -22,7 +22,7 @@ export const SignInScreen: FC = () => {
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Don't have an account?</Text>
 
-        <IconButton onPress={() => navigate(Route.signup)}>
+        <IconButton onPress={() => navigate(Route.Signup)}>
           <Text style={styles.signupButtonText}>Sign up</Text>
         </IconButton>
       </View>

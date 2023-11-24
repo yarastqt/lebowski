@@ -17,7 +17,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const styles = useStyles()
 
   const onProfilePress = () => {
-    navigation.navigate(Route.profile)
+    navigation.navigate(Route.Profile)
   }
 
   return (
