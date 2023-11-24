@@ -24,7 +24,7 @@ export const FriendList: FC = () => {
           key={friend.id}
           description={friend.email}
           onPress={() => onSelectFriendPress(friend)}
-          displayName={friend.email}
+          displayName={friend.displayName}
         />
       ))}
 
