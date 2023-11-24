@@ -4,17 +4,8 @@ export enum Route {
   signup = 'signup',
   settings = 'settings',
   splash = 'splash',
-  debts = 'debts',
-  people = 'people',
   profile = 'profile',
   createDebt = 'createDebt',
-}
-
-export type MainTabParamList = {
-  splash: undefined
-  debts: undefined
-  people: undefined
-  profile: undefined
 }
 
 export type RootStackParamList = {
@@ -23,10 +14,11 @@ export type RootStackParamList = {
   signup: undefined
   settings: undefined
   createDebt: undefined
+  profile: undefined
 }
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends MainTabParamList, RootStackParamList {}
+    interface RootParamList extends RootStackParamList {}
   }
 }

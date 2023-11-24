@@ -16,8 +16,8 @@ export const Header: FC<HeaderProps> = (props) => {
   const navigation = useNavigation()
   const styles = useStyles()
 
-  const onSettingsPress = () => {
-    navigation.navigate(Route.settings)
+  const onProfilePress = () => {
+    navigation.navigate(Route.profile)
   }
 
   return (
@@ -27,7 +27,7 @@ export const Header: FC<HeaderProps> = (props) => {
       <View style={styles.actions}>
         {actions}
 
-        <IconButton size={44} onPress={onSettingsPress}>
+        <IconButton size={44} onPress={onProfilePress}>
           <CircleGroupOutline size={24} />
         </IconButton>
       </View>

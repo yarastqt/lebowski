@@ -9,7 +9,8 @@ import {
 } from '@react-navigation/native-stack'
 
 import { CreateDebtScreen } from './create-debt-screen'
-import { MainScreens } from './main-screens'
+import { MainScreen } from './main-screen'
+import { ProfileScreen } from './profile-screen'
 import { SettingsScreen } from './settings-screen'
 import { SignInScreen } from './signin-screen'
 import { SignupScreen } from './signup-screen'
@@ -29,7 +30,8 @@ export const RootScreens: FC = () => {
       {isSignedIn ? (
         <>
           <RootStack.Group>
-            <RootStack.Screen component={MainScreens} name={Route.root} />
+            <RootStack.Screen component={MainScreen} name={Route.root} />
+            <RootStack.Screen component={ProfileScreen} name={Route.profile} />
             <RootStack.Screen component={SettingsScreen} name={Route.settings} />
           </RootStack.Group>
           <RootStack.Group screenOptions={{ presentation: 'modal' }}>
