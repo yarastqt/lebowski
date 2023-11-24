@@ -8,7 +8,7 @@ export enum Route {
   splash = 'splash',
   profile = 'profile',
   friend = 'friend',
-  createDebt = 'createDebt',
+  createTransaction = 'createTransaction',
 }
 
 export type RootStackParamList = {
@@ -16,7 +16,7 @@ export type RootStackParamList = {
   signin: undefined
   signup: undefined
   settings: undefined
-  createDebt: undefined
+  createTransaction: undefined
   profile: undefined
   friend: { displayName: string; id: string }
 }

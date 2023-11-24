@@ -8,7 +8,7 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack'
 
-import { CreateDebtScreen } from './create-debt-screen'
+import { CreateTransactionScreen } from './create-transaction-screen'
 import { FriendScreen } from './friend-screen'
 import { MainScreen } from './main-screen'
 import { ProfileScreen } from './profile-screen'
@@ -37,7 +37,7 @@ export const RootScreens: FC = () => {
             <RootStack.Screen component={SettingsScreen} name={Route.settings} />
           </RootStack.Group>
           <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-            <RootStack.Screen component={CreateDebtScreen} name={Route.createDebt} />
+            <RootStack.Screen component={CreateTransactionScreen} name={Route.createTransaction} />
           </RootStack.Group>
         </>
       ) : (

@@ -5,11 +5,11 @@ import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
 import { ActionButton, Form, Text, TextField } from '@app/shared/ui'
 
-import { createDebtScreenModel } from './create-debt-screen-model'
+import { createTransactionScreenModel } from './create-transaction-screen-model'
 
-export const CreateDebtScreen: FC = () => {
-  const { fields, submit, isInvalid } = useForm(createDebtScreenModel.form)
-  const { isPending } = useUnit(createDebtScreenModel)
+export const CreateTransactionScreen: FC = () => {
+  const { fields, submit, isInvalid } = useForm(createTransactionScreenModel.form)
+  const { isPending } = useUnit(createTransactionScreenModel)
 
   return (
     <BaseLayout edgets={{ top: 'off' }}>

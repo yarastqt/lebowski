@@ -51,7 +51,7 @@ createDebtFx.failData.watch((error) => {
   console.log('>>> error', error)
 })
 
-export const createDebtScreenModel = {
+export const createTransactionScreenModel = {
   form,
 
   '@@unitShape': () => ({
