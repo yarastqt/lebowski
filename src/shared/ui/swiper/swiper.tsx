@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics'
 import { FC, useCallback, useState } from 'react'
 import { Insets, Pressable } from 'react-native'
 import Animated, {
@@ -34,7 +35,10 @@ export const Swiper: FC<SwiperProps> = (props) => {
   const backgroundColor = useSharedValue(0)
 
   const onPress = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+
     setKey((key) => ~key)
+
     onChange({ from: to, to: from })
   }, [from, to])
 
