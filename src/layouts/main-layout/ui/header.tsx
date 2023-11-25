@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { CircleGroupOutline } from '@app/shared/icons'
+import { PersonOutline } from '@app/shared/icons'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
 import { IconButton, Logo } from '@app/shared/ui'
@@ -28,7 +28,7 @@ export const Header: FC<HeaderProps> = (props) => {
         {actions}
 
         <IconButton size={44} onPress={onProfilePress}>
-          <CircleGroupOutline size={24} />
+          <PersonOutline size={24} />
         </IconButton>
       </View>
     </View>
