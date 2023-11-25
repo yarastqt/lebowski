@@ -31,13 +31,13 @@ export const Swiper: FC<SwiperProps> = (props) => {
   const theme = useTheme()
   const styles = useStyles()
 
-  const [key, setKey] = useState(0)
+  const [keys, setKeys] = useState({ from: 0, to: 1 })
   const backgroundColor = useSharedValue(0)
 
   const onPress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
 
-    setKey((key) => ~key)
+    setKeys((keys) => ({ from: ~keys.from, to: ~keys.to }))
 
     onChange({ from: to, to: from })
   }, [from, to])
@@ -64,7 +64,7 @@ export const Swiper: FC<SwiperProps> = (props) => {
         ellipsizeMode="tail"
         entering={FadeInRight}
         exiting={FadeOutRight}
-        key={`${from}${key}`}
+        key={`${from}${keys.from}`}
         numberOfLines={1}
         style={styles.text}
       >
@@ -78,7 +78,11 @@ export const Swiper: FC<SwiperProps> = (props) => {
         onPressOut={onPressOut}
         style={styles.swap}
       >
-        <Animated.View entering={RotateInUpRight} exiting={RotateOutUpRight} key={key}>
+        <Animated.View
+          entering={RotateInUpRight}
+          exiting={RotateOutUpRight}
+          key={`${keys.from}${keys.to}`}
+        >
           <Swap color={theme.color.textSecondary} size={24} />
         </Animated.View>
       </Pressable>
@@ -87,7 +91,7 @@ export const Swiper: FC<SwiperProps> = (props) => {
         ellipsizeMode="tail"
         entering={FadeInLeft}
         exiting={FadeOutLeft}
-        key={`${to}${key}`}
+        key={`${to}${keys.to}`}
         numberOfLines={1}
         style={styles.text}
       >
