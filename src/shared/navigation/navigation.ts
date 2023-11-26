@@ -16,7 +16,7 @@ export type RootStackParamList = {
   Signin: undefined
   Signup: undefined
   Settings: undefined
-  CreateTransaction: undefined
+  CreateTransaction: { displayName: string; id: string }
   Profile: undefined
   Friend: { displayName: string; id: string }
 }

@@ -5,21 +5,22 @@ import { createForm, rules } from '@app/shared/lib/effector-form'
 import { navigationModel } from '@app/shared/navigation'
 
 interface FormValues {
-  reciverEmail: string
+  addressee: { id: string; displayName: string }
   amount: string
-  currency: Currency
   comment: string
+  currency: Currency
+  requester: { id: string; displayName: string }
 }
 
 const form = createForm<FormValues>({
   initialValues: {
-    reciverEmail: '',
+    addressee: { id: '', displayName: '' },
     amount: '',
-    currency: Currency.Amd,
     comment: '',
+    currency: Currency.Amd,
+    requester: { id: '', displayName: '' },
   },
   validate: rules.config(() => ({
-    reciverEmail: rules.required('Email is required'),
     amount: rules.required('Amount is required'),
   })),
 })
@@ -27,11 +28,12 @@ const form = createForm<FormValues>({
 const createDebtFx = attach({
   source: form.$values,
   effect: (values) =>
-    api.createDebt({
-      receiverEmail: values.reciverEmail,
+    api.createTransaction({
+      addresseeId: values.addressee.id,
+      requesterId: values.requester.id,
       amount: Number(values.amount),
-      currency: values.currency,
       comment: values.comment,
+      currency: values.currency,
     }),
 })
 

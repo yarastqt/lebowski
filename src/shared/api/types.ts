@@ -11,10 +11,8 @@ export enum Currency {
   Amd = 'amd',
 }
 
-export enum DebtStatus {
-  Pending = 'pending',
-  Accepted = 'accepted',
-  Completed = 'completed',
+export enum TransactionStatus {
+  Initial = 'initial',
 }
 
 export interface User {
