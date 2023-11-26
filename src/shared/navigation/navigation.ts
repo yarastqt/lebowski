@@ -5,6 +5,7 @@ export enum Route {
   Signin = 'Signin',
   Signup = 'Signup',
   Settings = 'Settings',
+  Activity = 'Activity',
   Splash = 'Splash',
   Profile = 'Profile',
   Friend = 'Friend',
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Signin: undefined
   Signup: undefined
   Settings: undefined
+  Activity: undefined
   CreateTransaction: { displayName: string; id: string }
   Profile: undefined
   Friend: { displayName: string; id: string }

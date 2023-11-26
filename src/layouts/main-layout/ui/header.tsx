@@ -1,33 +1,24 @@
 import { FC, ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { PersonOutline } from '@app/shared/icons'
+import { Bell, PersonOutline } from '@app/shared/icons'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
 import { IconButton, Logo } from '@app/shared/ui'
 
-export interface HeaderProps {
-  actions?: ReactNode
-}
-
-export const Header: FC<HeaderProps> = (props) => {
-  const { actions } = props
-
+export const Header: FC = (props) => {
   const navigation = useNavigation()
   const styles = useStyles()
-
-  const onProfilePress = () => {
-    navigation.navigate(Route.Profile)
-  }
 
   return (
     <View style={styles.root}>
       <Logo />
 
       <View style={styles.actions}>
-        {actions}
-
-        <IconButton size={44} onPress={onProfilePress}>
+        <IconButton size={44} onPress={() => navigation.navigate(Route.Activity)}>
+          <Bell size={24} />
+        </IconButton>
+        <IconButton size={44} onPress={() => navigation.navigate(Route.Profile)}>
           <PersonOutline size={24} />
         </IconButton>
       </View>

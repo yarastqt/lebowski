@@ -5,11 +5,10 @@ import { Header } from './ui/header'
 
 export interface MainLayoutProps {
   children: ReactNode
-  headerActions?: ReactNode
 }
 
 export const MainLayout: FC<MainLayoutProps> = (props) => {
-  const { children, headerActions } = props
+  const { children } = props
 
-  return <BaseLayout header={<Header actions={headerActions} />}>{children}</BaseLayout>
+  return <BaseLayout header={<Header />}>{children}</BaseLayout>
 }

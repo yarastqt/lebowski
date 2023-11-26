@@ -1,4 +1,5 @@
 export * from './arrow-short-left'
+export * from './bell'
 export * from './circle-group-outline'
 export * from './close'
 export * from './credit-card-outline'

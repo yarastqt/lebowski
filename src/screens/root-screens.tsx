@@ -8,6 +8,7 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack'
 
+import { ActivityScreen } from './activity'
 import { CreateTransactionScreen } from './create-transaction-screen'
 import { FriendScreen } from './friend-screen'
 import { MainScreen } from './main-screen'
@@ -34,6 +35,7 @@ export const RootScreens: FC = () => {
             <RootStack.Screen component={MainScreen} name={Route.Root} />
             <RootStack.Screen component={FriendScreen} name={Route.Friend} />
             <RootStack.Screen component={ProfileScreen} name={Route.Profile} />
+            <RootStack.Screen component={ActivityScreen} name={Route.Activity} />
             <RootStack.Screen component={SettingsScreen} name={Route.Settings} />
           </RootStack.Group>
           <RootStack.Group screenOptions={{ presentation: 'modal' }}>
