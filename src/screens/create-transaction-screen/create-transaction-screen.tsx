@@ -31,6 +31,7 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
     })
   }, [route.params, user, setValues])
 
+  // FIXME: After change form is reseted.
   const onChangeAddressee = useCallback(() => {
     setValues({ ...values, requester: values.addressee, addressee: values.requester })
   }, [values, setValues])

@@ -45,7 +45,7 @@ export async function subscribeToFriendList(payload: {
       const user = requester.id === payload.params.userId ? addressee : requester
 
       result.push({
-        id: doc.id,
+        id: user.id,
         displayName: user.displayName,
         email: user.email,
       })

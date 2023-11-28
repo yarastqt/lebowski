@@ -1,4 +1,4 @@
-import { DocumentReference } from 'firebase/firestore'
+import { DocumentReference, Timestamp } from 'firebase/firestore'
 
 export enum RelationshipStatus {
   Pending = 'pending',
@@ -37,4 +37,23 @@ export interface Relationship {
   addresseeRef: DocumentReference
   requesterRef: DocumentReference
   status: RelationshipStatus
+}
+
+export interface Transaction {
+  id: string
+  addresseeName: string
+  amount: number
+  comment?: string
+  createdAt: number
+  requesterName: string
+  status: TransactionStatus
+}
+
+export interface TransactionDocument {
+  addresseeRef: DocumentReference
+  requesterRef: DocumentReference
+  amount: number
+  comment: string
+  createdAt: Timestamp | null
+  status: TransactionStatus
 }

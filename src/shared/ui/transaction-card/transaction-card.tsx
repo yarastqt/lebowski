@@ -1,25 +1,27 @@
 import { FC } from 'react'
 import { Text, View } from 'react-native'
 
+import { dateFormatter } from '@app/shared/lib/date'
 import { createStyles } from '@app/shared/theme'
 
 export interface TransactionCardProps {
-  amount: string
-  comment: string
-  date: number
+  amount: number
+  comment?: string
+  createdAt: number
   requesterName: string
   addresseeName: string
 }
 
 export const TransactionCard: FC<TransactionCardProps> = (props) => {
-  const { amount, comment, date, requesterName, addresseeName } = props
+  const { amount, comment, createdAt, requesterName, addresseeName } = props
 
   const styles = useStyles()
 
   return (
     <View style={styles.root}>
       <Text style={styles.amount}>{amount}</Text>
-      <Text style={styles.comment}>{comment}</Text>
+
+      {comment && <Text style={styles.comment}>{comment}</Text>}
 
       <View style={styles.footer}>
         <View style={styles.participants}>
@@ -27,7 +29,7 @@ export const TransactionCard: FC<TransactionCardProps> = (props) => {
           <Text style={styles.participant}>{addresseeName}</Text>
         </View>
 
-        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.date}>{dateFormatter.format(createdAt)}</Text>
       </View>
     </View>
   )
