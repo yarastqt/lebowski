@@ -1,9 +1,10 @@
 import { attach, combine, createEvent, createStore, sample } from 'effector'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import invariant from 'ts-invariant'
 
+import { ColorScheme, Currency, Language } from '@app/shared/api'
 import { $fireauth, $firestore } from '@app/shared/firebase'
-import { User } from '@app/shared/session'
 
 export const signupModel = (() => {
   const emailChanged = createEvent<string>()
@@ -24,13 +25,19 @@ export const signupModel = (() => {
         const result = await createUserWithEmailAndPassword(fireauth, values.email, values.password)
         const userRef = doc(firestore, 'users', result.user.uid)
 
+        invariant(result.user.email, 'User email is not defined')
+
         await setDoc(userRef, {
           id: result.user.uid,
-          displayName: result.user.displayName,
+          displayName: getDisplayNameFromEmail(result.user.email),
           email: result.user.email,
           createdAt: serverTimestamp(),
-          // TODO: Add extended type for User.
-        } satisfies User & { createdAt: unknown })
+          settings: {
+            language: Language.En,
+            colorScheme: ColorScheme.Dark,
+          },
+          balances: [{ currency: Currency.Amd, amount: 0 }],
+        })
 
         console.log('>>> result', result)
       } catch (error) {
@@ -70,3 +77,7 @@ export const signupModel = (() => {
     }),
   }
 })()
+
+function getDisplayNameFromEmail(email: string) {
+  return email.replace(/(@.+)/, '')
+}

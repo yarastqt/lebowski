@@ -1,5 +1,15 @@
 import { DocumentReference, Timestamp } from 'firebase/firestore'
 
+export enum Language {
+  En = 'en',
+}
+
+export enum ColorScheme {
+  Dark = 'dark',
+  Light = 'light',
+  System = 'system',
+}
+
 export enum RelationshipStatus {
   Pending = 'pending',
   Accepted = 'accepted',
@@ -15,10 +25,23 @@ export enum TransactionStatus {
   Initial = 'initial',
 }
 
+export interface UserSettings {
+  language: Language
+  colorScheme: ColorScheme
+}
+
+export interface UserBalance {
+  currency: Currency
+  amount: number
+}
+
 export interface User {
   id: string
-  email: string
+  createdAt: Timestamp
   displayName: string
+  email: string
+  settings: UserSettings
+  balances: UserBalance[]
 }
 
 export interface Invite {
