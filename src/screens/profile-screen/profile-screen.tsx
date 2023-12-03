@@ -5,7 +5,7 @@ import { SignOutListItem } from '@app/features/sign-out'
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { CircleGroupOutline } from '@app/shared/icons'
 import { Route } from '@app/shared/navigation'
-import { List, ListItem } from '@app/shared/ui'
+import { List, ListItem, Section } from '@app/shared/ui'
 import { ProfileInfo } from '@app/widgets/profile-info'
 import { useNavigation } from '@react-navigation/native'
 
@@ -14,17 +14,19 @@ export const ProfileScreen: FC = () => {
 
   return (
     <ScreenLayout title="Profile">
-      <ProfileInfo />
+      <Section>
+        <ProfileInfo />
 
-      <List>
-        <ListItem
-          before={<CircleGroupOutline size={24} />}
-          title="Settings"
-          onPress={() => navigation.navigate(Route.Settings)}
-        />
-        <ShareProfileListItem />
-        <SignOutListItem />
-      </List>
+        <List>
+          <ListItem
+            before={<CircleGroupOutline size={24} />}
+            title="Settings"
+            onPress={() => navigation.navigate(Route.Settings)}
+          />
+          <ShareProfileListItem />
+          <SignOutListItem />
+        </List>
+      </Section>
     </ScreenLayout>
   )
 }

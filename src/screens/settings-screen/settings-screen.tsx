@@ -3,6 +3,7 @@ import { View } from 'react-native'
 
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { createStyles } from '@app/shared/theme'
+import { Section } from '@app/shared/ui'
 
 import { AppVersion } from './ui/app-version'
 
@@ -11,9 +12,11 @@ export const SettingsScreen: FC = () => {
 
   return (
     <ScreenLayout title="Settings">
-      <View style={styles.footer}>
-        <AppVersion />
-      </View>
+      <Section>
+        <View style={styles.footer}>
+          <AppVersion />
+        </View>
+      </Section>
     </ScreenLayout>
   )
 }
