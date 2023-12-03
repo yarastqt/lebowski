@@ -1,9 +1,10 @@
 import { useGate, useUnit } from 'effector-react'
 import { FC } from 'react'
+import { View } from 'react-native'
 
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { Route, ScreenProps, useNavigation } from '@app/shared/navigation'
-import { ActionButton, List, Text, TransactionCard } from '@app/shared/ui'
+import { ActionButton, List, Pager, Section, Text, TransactionCard } from '@app/shared/ui'
 
 import { transactionScreenModel } from './friend-screen-model'
 
@@ -19,31 +20,38 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
 
   return (
     <ScreenLayout title={route.params.displayName} edgets={{ top: 'maximum', bottom: 'off' }}>
-      <ActionButton
-        onPress={() => {
-          navigation.navigate(Route.CreateTransaction, {
-            displayName: route.params.displayName,
-            id: route.params.id,
-          })
-        }}
-      >
-        Create transaction
-      </ActionButton>
+      <Pager initialPageIndex={0} onChangePage={() => null}>
+        <Section>
+          <ActionButton
+            onPress={() => {
+              navigation.navigate(Route.CreateTransaction, {
+                displayName: route.params.displayName,
+                id: route.params.id,
+              })
+            }}
+          >
+            Create transaction
+          </ActionButton>
 
-      <Text variant="heading-m">Transactions</Text>
+          <Text variant="heading-m">Transactions</Text>
 
-      <List listStyle="fill">
-        {transactions.map((transaction) => (
-          <TransactionCard
-            key={transaction.id}
-            addresseeName={transaction.addresseeName}
-            amount={transaction.amount}
-            comment={transaction.comment}
-            createdAt={transaction.createdAt}
-            requesterName={transaction.requesterName}
-          />
-        ))}
-      </List>
+          <List listStyle="fill">
+            {transactions.map((transaction) => (
+              <TransactionCard
+                key={transaction.id}
+                addresseeName={transaction.addresseeName}
+                amount={transaction.amount}
+                comment={transaction.comment}
+                createdAt={transaction.createdAt}
+                requesterName={transaction.requesterName}
+              />
+            ))}
+          </List>
+        </Section>
+        <Section>
+          <ActionButton onPress={() => null}>Create new wallet</ActionButton>
+        </Section>
+      </Pager>
     </ScreenLayout>
   )
 }
