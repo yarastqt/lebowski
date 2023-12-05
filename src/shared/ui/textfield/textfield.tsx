@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
 import Animated, {
   interpolate,
@@ -16,13 +16,17 @@ import { useBottomSheetInternal } from '@gorhom/bottom-sheet'
 import { IconButton } from '../icon-button'
 
 export interface TextFieldProps
-  extends Pick<TextInputProps, 'secureTextEntry' | 'keyboardType' | 'value' | 'autoFocus'> {
+  extends Pick<
+    TextInputProps,
+    'secureTextEntry' | 'keyboardType' | 'value' | 'autoFocus' | 'defaultValue'
+  > {
+  isReadOnly?: boolean
   label: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
 }
 
 export const TextField: FC<TextFieldProps> = (props) => {
-  const { label, onChange, value, secureTextEntry, ...otherProps } = props
+  const { defaultValue, isReadOnly, label, onChange, secureTextEntry, value, ...otherProps } = props
 
   const bottomSheetInternal = useBottomSheetInternal(true)
 
@@ -78,6 +82,12 @@ export const TextField: FC<TextFieldProps> = (props) => {
     transform: [{ scale: interpolate(labelPosition.value, [0, 1], [1, 0.875]) }],
   }))
 
+  useEffect(() => {
+    if (defaultValue) {
+      labelPosition.value = withSpring(1)
+    }
+  }, [defaultValue])
+
   const EyeIcon = isSecureText ? EyeOutline : EyeOffOutline
 
   return (
@@ -86,16 +96,18 @@ export const TextField: FC<TextFieldProps> = (props) => {
 
       <TextInput
         {...otherProps}
-        value={value}
-        secureTextEntry={isSecureText}
-        onChangeText={onChange}
-        style={styles.input}
-        selectionColor={theme.color.textPrimary}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        keyboardAppearance={theme.colorScheme}
         autoCapitalize="none"
+        defaultValue={defaultValue}
+        editable={!isReadOnly}
+        keyboardAppearance={theme.colorScheme}
+        onBlur={onBlur}
+        onChangeText={onChange}
+        onFocus={onFocus}
         ref={inputRef}
+        secureTextEntry={isSecureText}
+        selectionColor={theme.color.textPrimary}
+        style={styles.input}
+        value={value}
       />
 
       {secureTextEntry && (
