@@ -1,4 +1,4 @@
-import { DocumentReference, Timestamp } from 'firebase/firestore'
+import { DocumentReference, FieldValue, Timestamp } from 'firebase/firestore'
 
 export enum Language {
   En = 'en',
@@ -26,11 +26,12 @@ export enum TransactionStatus {
 }
 
 export interface UserSettings {
-  language: Language
   colorScheme: ColorScheme
+  defaultCurrency: Currency
+  language: Language
 }
 
-export interface UserBalance {
+export interface RelationshipWallet {
   currency: Currency
   amount: number
 }
@@ -41,8 +42,13 @@ export interface User {
   displayName: string
   email: string
   settings: UserSettings
-  balances: UserBalance[]
 }
+
+export interface UserPyload extends Omit<User, 'createdAt'> {
+  createdAt: FieldValue
+}
+
+export interface UserDocument extends User {}
 
 export interface Invite {
   id: string
@@ -60,6 +66,15 @@ export interface Relationship {
   addresseeRef: DocumentReference
   requesterRef: DocumentReference
   status: RelationshipStatus
+  wallets: RelationshipWallet[]
+}
+
+export interface RelationshipPayload {
+  addresseeRef: DocumentReference
+  requesterRef: DocumentReference
+  createdAt: FieldValue
+  status: RelationshipStatus
+  wallets: RelationshipWallet[]
 }
 
 export interface Transaction {

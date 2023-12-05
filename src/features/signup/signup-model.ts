@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import invariant from 'ts-invariant'
 
-import { ColorScheme, Currency, Language } from '@app/shared/api'
+import { ColorScheme, Currency, Language, UserPyload } from '@app/shared/api'
 import { $fireauth, $firestore } from '@app/shared/firebase'
 
 export const signupModel = (() => {
@@ -33,11 +33,11 @@ export const signupModel = (() => {
           email: result.user.email,
           createdAt: serverTimestamp(),
           settings: {
-            language: Language.En,
             colorScheme: ColorScheme.Dark,
+            defaultCurrency: Currency.Usd,
+            language: Language.En,
           },
-          balances: [{ currency: Currency.Amd, amount: 0 }],
-        })
+        } satisfies UserPyload)
 
         console.log('>>> result', result)
       } catch (error) {

@@ -2,14 +2,9 @@ import { attach, combine, createEvent, createStore, sample, scopeBind } from 'ef
 import { onAuthStateChanged } from 'firebase/auth'
 import { QueryDocumentSnapshot, doc, getDoc } from 'firebase/firestore'
 
+import { User, UserDocument } from '@app/shared/api'
 import { scope } from '@app/shared/config'
 import { $fireauth, $firestore, firebaseAttached } from '@app/shared/firebase'
-
-export interface User {
-  id: string
-  email: string
-  displayName: string
-}
 
 export const sessionModel = (() => {
   const signedIn = createEvent<User>()
@@ -30,14 +25,10 @@ export const sessionModel = (() => {
               throw new Error('Not implemented')
             },
 
-            fromFirestore: (snapshot: QueryDocumentSnapshot): User => {
-              const data = snapshot.data()
+            fromFirestore: (snapshot: QueryDocumentSnapshot) => {
+              const data = snapshot.data() as UserDocument
 
-              return {
-                id: data.id,
-                email: data.email,
-                displayName: data.displayName,
-              }
+              return data satisfies User
             },
           })
           const userSnapshot = await getDoc(userRef)

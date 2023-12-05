@@ -6,11 +6,7 @@ import { $firestore } from '@app/shared/firebase'
 
 import { ApiError } from './api-error'
 import { Table } from './tables'
-
-interface User {
-  id: string
-  email: string
-}
+import { UserDocument } from './types'
 
 export async function getUserByEmail(params: { email: string }) {
   const firestore = scope.getState($firestore)
@@ -31,7 +27,7 @@ export async function getUserByEmail(params: { email: string }) {
 
   invariant(userDocument)
 
-  const user = userDocument.data()
+  const user = userDocument.data() as UserDocument
 
-  return { id: user.id, email: user.email } satisfies User
+  return user
 }

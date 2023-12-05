@@ -1,30 +1,40 @@
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
+import invariant from 'ts-invariant'
 
 import { scope } from '@app/shared/config'
 import { $firestore } from '@app/shared/firebase'
 
+import { sessionModel } from '../session'
 import { ApiError } from './api-error'
 import { getUserByEmail } from './get-user-by-email'
 import { Table } from './tables'
-import { RelationshipStatus } from './types'
+import { RelationshipPayload, RelationshipStatus } from './types'
 
-export async function sendInvite(params: { senderId: string; receiverEmail: string }) {
+export async function sendInvite(params: { receiverEmail: string }) {
   const firestore = scope.getState($firestore)
+  const user = scope.getState(sessionModel.$user)
+
+  invariant(user, 'User is not defined')
 
   // TODO: Add check for invite already sended.
   // TODO: Add check for user already friend.
   const receiverUser = await getUserByEmail({ email: params.receiverEmail })
 
-  if (params.senderId === receiverUser.id) {
+  if (user.id === receiverUser.id) {
     throw new ApiError('SELF_INVITE', 'Cannot send invite to self')
   }
 
   const relationshipsRef = collection(firestore, Table.Relationships)
+  const sharedCurrencies = new Set([
+    user.settings.defaultCurrency,
+    receiverUser.settings.defaultCurrency,
+  ])
 
   return addDoc(relationshipsRef, {
-    requesterRef: doc(firestore, Table.Users, params.senderId),
+    requesterRef: doc(firestore, Table.Users, user.id),
     addresseeRef: doc(firestore, Table.Users, receiverUser.id),
     createdAt: serverTimestamp(),
     status: RelationshipStatus.Pending,
-  })
+    wallets: Array.from(sharedCurrencies).map((currency) => ({ currency, amount: 0 })),
+  } satisfies RelationshipPayload)
 }
