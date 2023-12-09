@@ -7,26 +7,27 @@ import { createStyles } from '@app/shared/theme'
 import { IconButton } from '@app/shared/ui'
 
 export interface HeaderProps {
+  actions?: ReactNode
   children: ReactNode
 }
 
 export const Header: FC<HeaderProps> = (props) => {
-  const { children } = props
+  const { actions, children } = props
 
   const navigation = useNavigation()
   const styles = useStyles()
 
-  const onBackPress = () => {
-    navigation.goBack()
-  }
+  const isHasActions = actions !== undefined
 
   return (
-    <View style={styles.root}>
-      <IconButton size={44} onPress={onBackPress}>
+    <View style={[styles.root, isHasActions && styles.rootWithActions]}>
+      <IconButton size={44} onPress={() => navigation.goBack()}>
         <ArrowShortLeft size={24} />
       </IconButton>
 
-      <Text style={styles.title}>{children}</Text>
+      <Text style={[styles.title, isHasActions && styles.titleWithActions]}>{children}</Text>
+
+      <View style={styles.actions}>{actions}</View>
     </View>
   )
 }
@@ -41,11 +42,23 @@ const useStyles = createStyles((theme) => ({
     paddingRight: 24,
   },
 
+  rootWithActions: {
+    paddingRight: 14,
+  },
+
   title: {
     ...theme.typography.headingM,
     color: theme.color.textPrimary,
     flex: 1,
     textAlign: 'center',
     marginRight: 34,
+  },
+
+  titleWithActions: {
+    marginRight: 0,
+  },
+
+  actions: {
+    flexDirection: 'row',
   },
 }))
