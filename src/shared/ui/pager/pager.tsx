@@ -6,21 +6,18 @@ import { createStyles } from '@app/shared/theme'
 
 export interface PagerProps {
   children: ReactNode
-  initialPageIndex: number
-  onChangePage: (pageIndex: number) => void
 }
 
 export const Pager: FC<PagerProps> = (props) => {
-  const { children, initialPageIndex, onChangePage } = props
+  const { children } = props
 
   const styles = useStyles()
-  const [activePageIndex, setActivePageIndex] = useState(initialPageIndex)
+  const [activePageIndex, setActivePageIndex] = useState(0)
 
   const onPageSelected = useCallback((event: NativeSyntheticEvent<{ position: number }>) => {
     const nextPageIndex = event.nativeEvent.position
 
     setActivePageIndex(nextPageIndex)
-    onChangePage(nextPageIndex)
   }, [])
 
   const pages = Children.toArray(children)
@@ -37,7 +34,7 @@ export const Pager: FC<PagerProps> = (props) => {
       </View>
 
       <PagerView
-        initialPage={initialPageIndex}
+        initialPage={activePageIndex}
         onPageSelected={onPageSelected}
         style={styles.content}
       >
