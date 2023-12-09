@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { View } from 'react-native'
 
 import { Bell, PersonOutline } from '@app/shared/icons'
@@ -6,7 +6,7 @@ import { Route, useNavigation } from '@app/shared/navigation'
 import { createStyles } from '@app/shared/theme'
 import { IconButton, Logo } from '@app/shared/ui'
 
-export const Header: FC = (props) => {
+export const Header: FC = () => {
   const navigation = useNavigation()
   const styles = useStyles()
 
