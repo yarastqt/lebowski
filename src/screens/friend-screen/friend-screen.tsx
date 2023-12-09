@@ -1,6 +1,7 @@
 import { useGate, useUnit } from 'effector-react'
 import { FC } from 'react'
 
+import { CreateWalletButton } from '@app/features/create-wallet'
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { Route, ScreenProps, useNavigation } from '@app/shared/navigation'
 import { ActionButton, List, Pager, Section, Text, TransactionCard } from '@app/shared/ui'
@@ -18,7 +19,11 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
   useGate(friendScreenModel.gate, { friendId: route.params.id })
 
   return (
-    <ScreenLayout title={route.params.displayName} edgets={{ top: 'maximum', bottom: 'off' }}>
+    <ScreenLayout
+      actions={<CreateWalletButton />}
+      title={route.params.displayName}
+      edgets={{ top: 'maximum', bottom: 'off' }}
+    >
       <Pager>
         {wallets.map((wallet) => (
           <Section key={wallet.currency}>

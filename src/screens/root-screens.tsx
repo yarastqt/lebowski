@@ -10,6 +10,7 @@ import {
 
 import { ActivityScreen } from './activity'
 import { CreateTransactionScreen } from './create-transaction-screen'
+import { CreateWalletScreen } from './create-wallet'
 import { FriendScreen } from './friend-screen'
 import { MainScreen } from './main-screen'
 import { ProfileScreen } from './profile-screen'
@@ -40,6 +41,7 @@ export const RootScreens: FC = () => {
           </RootStack.Group>
           <RootStack.Group screenOptions={{ presentation: 'modal' }}>
             <RootStack.Screen component={CreateTransactionScreen} name={Route.CreateTransaction} />
+            <RootStack.Screen component={CreateWalletScreen} name={Route.CreateWallet} />
           </RootStack.Group>
         </>
       ) : (

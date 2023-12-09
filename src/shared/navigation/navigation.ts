@@ -11,6 +11,7 @@ export enum Route {
   Profile = 'Profile',
   Friend = 'Friend',
   CreateTransaction = 'CreateTransaction',
+  CreateWallet = 'CreateWallet',
 }
 
 export type RootStackParamList = {
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   Settings: undefined
   Activity: undefined
   CreateTransaction: { displayName: string; id: string; currency: Currency }
+  CreateWallet: undefined
   Profile: undefined
   Friend: { displayName: string; id: string }
 }
