@@ -1,25 +1,34 @@
 import { FC } from 'react'
 import { Text, View } from 'react-native'
 
+import { Currency } from '@app/shared/api'
 import { dateFormatter } from '@app/shared/lib/date'
+import { useNumberFormatter } from '@app/shared/lib/number'
 import { createStyles } from '@app/shared/theme'
 
 export interface TransactionCardProps {
+  addresseeName: string
   amount: number
   comment?: string
   createdAt: number
+  currency: Currency
   requesterName: string
-  addresseeName: string
 }
 
 export const TransactionCard: FC<TransactionCardProps> = (props) => {
-  const { amount, comment, createdAt, requesterName, addresseeName } = props
+  const { addresseeName, amount, comment, createdAt, currency, requesterName } = props
 
   const styles = useStyles()
 
+  const currencyFormatter = useNumberFormatter({
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  })
+
   return (
     <View style={styles.root}>
-      <Text style={styles.amount}>{amount}</Text>
+      <Text style={styles.amount}>{currencyFormatter.format(amount)}</Text>
 
       {comment && <Text style={styles.comment}>{comment}</Text>}
 
