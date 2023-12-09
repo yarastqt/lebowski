@@ -1,3 +1,4 @@
+import { Currency } from '@app/shared/api'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 export enum Route {
@@ -18,7 +19,7 @@ export type RootStackParamList = {
   Signup: undefined
   Settings: undefined
   Activity: undefined
-  CreateTransaction: { displayName: string; id: string }
+  CreateTransaction: { displayName: string; id: string; currency: Currency }
   Profile: undefined
   Friend: { displayName: string; id: string }
 }

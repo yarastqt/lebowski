@@ -1,11 +1,9 @@
-import { useUnit } from 'effector-react'
-import { FC, useCallback, useEffect } from 'react'
-import invariant from 'ts-invariant'
+import { useGate, useUnit } from 'effector-react'
+import { FC } from 'react'
 
 import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
 import { ScreenProps } from '@app/shared/navigation'
-import { sessionModel } from '@app/shared/session'
 import { ActionButton, Form, Section, Swiper, Text, TextField } from '@app/shared/ui'
 
 import { createTransactionScreenModel } from './create-transaction-screen-model'
@@ -15,26 +13,10 @@ export type CreateTransactionScreenProps = ScreenProps<'CreateTransaction'>
 export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props) => {
   const { route } = props
 
-  const { fields, isInvalid, setValues, submit, values } = useForm(
-    createTransactionScreenModel.form,
-  )
-  const { isPending } = useUnit(createTransactionScreenModel)
-  const { user } = useUnit(sessionModel)
+  const { fields, isInvalid, submit } = useForm(createTransactionScreenModel.form)
+  const { isPending, onAddresseeChange } = useUnit(createTransactionScreenModel)
 
-  useEffect(() => {
-    invariant(user, 'User is not defined')
-
-    setValues({
-      ...values,
-      requester: { id: user.id, displayName: user.displayName },
-      addressee: { id: route.params.id, displayName: route.params.displayName },
-    })
-  }, [route.params, user, setValues])
-
-  // FIXME: After change form is reseted.
-  const onChangeAddressee = useCallback(() => {
-    setValues({ ...values, requester: values.addressee, addressee: values.requester })
-  }, [values, setValues])
+  useGate(createTransactionScreenModel.gate, route.params)
 
   return (
     <BaseLayout edgets={{ top: 'off' }}>
@@ -44,10 +26,11 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
         <Form>
           <TextField {...fields.amount.props} label="Amount" keyboardType="number-pad" />
           <TextField {...fields.comment.props} label="Comment" />
+          <TextField isReadOnly defaultValue={route.params.currency} label="Currency" />
           <Swiper
             from={fields.requester.displayName.value}
             to={fields.addressee.displayName.value}
-            onChange={onChangeAddressee}
+            onChange={onAddresseeChange}
           />
 
           <ActionButton onPress={submit} isPending={isPending} isDisabled={isInvalid}>

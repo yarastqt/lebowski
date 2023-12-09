@@ -25,16 +25,15 @@ export async function sendInvite(params: { receiverEmail: string }) {
   }
 
   const relationshipsRef = collection(firestore, Table.Relationships)
-  const sharedCurrencies = new Set([
-    user.settings.defaultCurrency,
-    receiverUser.settings.defaultCurrency,
-  ])
 
   return addDoc(relationshipsRef, {
     requesterRef: doc(firestore, Table.Users, user.id),
     addresseeRef: doc(firestore, Table.Users, receiverUser.id),
     createdAt: serverTimestamp(),
     status: RelationshipStatus.Pending,
-    wallets: Array.from(sharedCurrencies).map((currency) => ({ currency, amount: 0 })),
+    wallets: {
+      [user.settings.defaultCurrency]: { amount: 0, transactions: [] },
+      [receiverUser.settings.defaultCurrency]: { amount: 0, transactions: [] },
+    },
   } satisfies RelationshipPayload)
 }

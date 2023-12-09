@@ -1,22 +1,22 @@
 import { attach, createEvent, createStore, sample, scopeBind } from 'effector'
 import { createGate } from 'effector-react'
 
-import { Transaction, api } from '@app/shared/api'
+import { RelationshipWallet, api } from '@app/shared/api'
 import { scope } from '@app/shared/config'
 
 const gate = createGate<{ friendId: string }>()
 
-const transactionUpdated = createEvent<Transaction[]>()
-const $transactions = createStore<Transaction[]>([])
+const walletsUpdated = createEvent<RelationshipWallet[]>()
+const $wallets = createStore<RelationshipWallet[]>([])
 
-const subscribeToTransactionListFx = attach({
+const subscribeToWalletListFx = attach({
   source: gate.state,
   effect: ({ friendId }) => {
     // TODO: Unsub when gate is close.
-    api.subscribeToTransactionList({
+    api.subscribeToRelationshipWallet({
       params: { friendId },
-      onData: (transactions) => {
-        scopeBind(transactionUpdated, { scope })(transactions)
+      onData: (wallets) => {
+        scopeBind(walletsUpdated, { scope })(wallets)
       },
     })
   },
@@ -24,18 +24,18 @@ const subscribeToTransactionListFx = attach({
 
 sample({
   clock: gate.open,
-  target: subscribeToTransactionListFx,
+  target: subscribeToWalletListFx,
 })
 
 sample({
-  clock: transactionUpdated,
-  target: $transactions,
+  clock: walletsUpdated,
+  target: $wallets,
 })
 
-export const transactionScreenModel = {
+export const friendScreenModel = {
   gate,
 
   '@@unitShape': () => ({
-    transactions: $transactions,
+    wallets: $wallets,
   }),
 }

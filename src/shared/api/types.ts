@@ -16,9 +16,10 @@ export enum RelationshipStatus {
 }
 
 export enum Currency {
+  Amd = 'amd',
   Rub = 'rub',
   Usd = 'usd',
-  Amd = 'amd',
+  Unknown = 'unknown',
 }
 
 export enum TransactionStatus {
@@ -31,9 +32,20 @@ export interface UserSettings {
   language: Language
 }
 
-export interface RelationshipWallet {
-  currency: Currency
+export interface RelationshipTransactionDocument {
+  id: string
+  addresseeRef: DocumentReference
+  requesterRef: DocumentReference
+  ownerRef: DocumentReference
   amount: number
+  comment: string
+  createdAt: Timestamp | null
+  status: TransactionStatus
+}
+
+export interface RelationshipWalletDocument {
+  amount: number
+  transactions: RelationshipTransactionDocument[]
 }
 
 export interface User {
@@ -66,15 +78,17 @@ export interface Relationship {
   addresseeRef: DocumentReference
   requesterRef: DocumentReference
   status: RelationshipStatus
-  wallets: RelationshipWallet[]
+  wallets: Record<string, RelationshipWalletDocument>
 }
+
+export interface RelationshipDocument extends Relationship {}
 
 export interface RelationshipPayload {
   addresseeRef: DocumentReference
   requesterRef: DocumentReference
   createdAt: FieldValue
   status: RelationshipStatus
-  wallets: RelationshipWallet[]
+  wallets: Record<string, RelationshipWalletDocument>
 }
 
 export interface Transaction {
@@ -94,4 +108,19 @@ export interface TransactionDocument {
   comment: string
   createdAt: Timestamp | null
   status: TransactionStatus
+}
+
+export interface RelationshipTransaction {
+  id: string
+  addresseeName: string
+  amount: number
+  comment: string
+  createdAt: number
+  requesterName: string
+}
+
+export interface RelationshipWallet {
+  amount: number
+  currency: Currency
+  transactions: RelationshipTransaction[]
 }

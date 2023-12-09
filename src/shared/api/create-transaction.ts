@@ -1,4 +1,15 @@
-import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
+import {
+  and,
+  collection,
+  doc,
+  getDocs,
+  limit,
+  or,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import invariant from 'ts-invariant'
 
 import { scope } from '@app/shared/config'
@@ -6,7 +17,7 @@ import { $firestore } from '@app/shared/firebase'
 import { sessionModel } from '@app/shared/session'
 
 import { Table } from './tables'
-import { Currency, TransactionStatus } from './types'
+import { Currency, RelationshipStatus, TransactionStatus } from './types'
 
 export interface CreateTransactionParams {
   addresseeId: string
@@ -25,22 +36,37 @@ export async function createTransaction(params: CreateTransactionParams) {
   const ownerRef = doc(firestore, Table.Users, user.id)
   const requesterRef = doc(firestore, Table.Users, params.requesterId)
   const addresseeRef = doc(firestore, Table.Users, params.addresseeId)
-  const transactionsRef = collection(firestore, Table.Transactions)
+  const relationshipsRef = collection(firestore, Table.Relationships)
 
-  // TOOD: Add validation:
-  // 1. User is friend.
-  // 2. Requester and addressee is exists.
+  const relationshipQuery = query(
+    relationshipsRef,
+    and(
+      or(
+        and(where('requesterRef', '==', requesterRef), where('addresseeRef', '==', addresseeRef)),
+        and(where('requesterRef', '==', addresseeRef), where('addresseeRef', '==', requesterRef)),
+      ),
+      where('status', '==', RelationshipStatus.Accepted),
+    ),
+    limit(1),
+  )
 
-  return addDoc(transactionsRef, {
-    ownerRef,
-    requesterRef,
-    addresseeRef,
+  const relationshipsSnapshot = await getDocs(relationshipQuery)
+  const relationshipDocument = relationshipsSnapshot.docs.at(0)
 
-    amount: params.amount,
-    comment: params.comment,
-    currency: params.currency,
+  invariant(relationshipDocument, 'Relationship document is not accepted or defined')
 
-    status: TransactionStatus.Initial,
-    createdAt: serverTimestamp(),
+  const transactionId = doc(collection(firestore, 'transaction')).id
+
+  await updateDoc(relationshipDocument.ref, {
+    [`wallets.${params.currency}.transactions.${transactionId}`]: {
+      id: transactionId,
+      addresseeRef,
+      requesterRef,
+      ownerRef,
+      amount: params.amount,
+      comment: params.comment ?? '',
+      status: TransactionStatus.Initial,
+      createdAt: serverTimestamp(),
+    },
   })
 }
