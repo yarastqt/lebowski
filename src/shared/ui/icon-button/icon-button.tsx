@@ -39,7 +39,7 @@ export const IconButton: FC<IconButtonProps> = (props) => {
   )
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   root: {
     justifyContent: 'center',
     alignItems: 'center',
