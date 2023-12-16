@@ -18,7 +18,7 @@ export const List: FC<ListProps> = (props) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      style={{ marginBottom: -insets.bottom, marginHorizontal: listStyle === 'fill' ? -12 : 0 }}
+      style={{ marginBottom: -insets.bottom, marginHorizontal: listStyle === 'fill' ? -12 : -16 }}
     >
       <View style={styles.root}>{children}</View>
       <View style={{ height: insets.bottom }} />
