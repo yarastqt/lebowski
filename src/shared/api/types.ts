@@ -110,6 +110,8 @@ export interface TransactionDocument {
   status: TransactionStatus
 }
 
+export type RelationshipTransactionState = 'incoming' | 'outgoing'
+
 export interface RelationshipTransaction {
   id: string
   addresseeName: string
@@ -117,6 +119,7 @@ export interface RelationshipTransaction {
   comment: string
   createdAt: number
   requesterName: string
+  state: RelationshipTransactionState
 }
 
 export interface RelationshipWallet {

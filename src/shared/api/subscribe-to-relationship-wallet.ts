@@ -75,6 +75,7 @@ export async function subscribeToRelationshipWallet(payload: {
               transaction.requesterRef.id === userRef.id ? user.displayName : friend.displayName,
             addresseeName:
               transaction.addresseeRef.id === userRef.id ? user.displayName : friend.displayName,
+            state: transaction.requesterRef.id === userRef.id ? 'outgoing' : 'incoming',
           }))
           .sort((a, b) => b.createdAt - a.createdAt),
       }))

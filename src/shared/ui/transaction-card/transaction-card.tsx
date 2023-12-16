@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Text, View } from 'react-native'
 
-import { Currency } from '@app/shared/api'
+import { Currency, RelationshipTransactionState } from '@app/shared/api'
 import { ArrowShortForwardStrong } from '@app/shared/icons'
 import { dateFormatter } from '@app/shared/lib/date'
 import { useNumberFormatter } from '@app/shared/lib/number'
@@ -14,10 +14,11 @@ export interface TransactionCardProps {
   createdAt: number
   currency: Currency
   requesterName: string
+  state: RelationshipTransactionState
 }
 
 export const TransactionCard: FC<TransactionCardProps> = (props) => {
-  const { addresseeName, amount, comment, createdAt, currency, requesterName } = props
+  const { addresseeName, amount, comment, createdAt, currency, requesterName, state } = props
 
   const theme = useTheme()
   const styles = useStyles()
@@ -28,9 +29,18 @@ export const TransactionCard: FC<TransactionCardProps> = (props) => {
     maximumFractionDigits: 0,
   })
 
+  const isIncoming = state === 'incoming'
+
   return (
     <View style={styles.root}>
-      <Text style={styles.amount}>{currencyFormatter.format(amount)}</Text>
+      <Text
+        style={[
+          styles.amount,
+          { color: isIncoming ? theme.color.statusNegative : theme.color.statusPositive },
+        ]}
+      >
+        {currencyFormatter.format(amount)}
+      </Text>
 
       {comment && <Text style={styles.comment}>{comment}</Text>}
 
@@ -58,7 +68,6 @@ const useStyles = createStyles((theme) => ({
 
   amount: {
     ...theme.typography.textL,
-    color: theme.color.statusPositive,
   },
 
   comment: {

@@ -49,6 +49,7 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
                   createdAt={transaction.createdAt}
                   currency={wallet.currency}
                   requesterName={transaction.requesterName}
+                  state={transaction.state}
                 />
               ))}
             </List>
