@@ -1,17 +1,20 @@
 import { useUnit } from 'effector-react'
 import { FC } from 'react'
 
-import { UserPlus } from '@app/shared/icons'
-import { IconButton } from '@app/shared/ui'
+import { Plus } from '@app/shared/icons'
+import { useTheme } from '@app/shared/theme'
+import { TextButton } from '@app/shared/ui'
 
 import { sendInviteModel } from '../model'
 
 export const SendInviteButton: FC = () => {
+  const theme = useTheme()
+
   const { onOpen } = useUnit(sendInviteModel.dialog)
 
   return (
-    <IconButton size={44} onPress={onOpen}>
-      <UserPlus size={24} />
-    </IconButton>
+    <TextButton after={<Plus color={theme.color.textSecondary} size={24} />} onPress={onOpen}>
+      Invite
+    </TextButton>
   )
 }

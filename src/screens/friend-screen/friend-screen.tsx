@@ -1,10 +1,11 @@
 import { useGate, useUnit } from 'effector-react'
 import { FC } from 'react'
 
+import { CreateTransactionButton } from '@app/features/create-transaction'
 import { CreateWalletButton } from '@app/features/create-wallet'
 import { ScreenLayout } from '@app/layouts/screen-layout'
-import { Route, ScreenProps, useNavigation } from '@app/shared/navigation'
-import { ActionButton, List, Pager, Section, Text, TransactionCard } from '@app/shared/ui'
+import { ScreenProps } from '@app/shared/navigation'
+import { List, Pager, Section, SectionHeading, TransactionCard } from '@app/shared/ui'
 
 import { friendScreenModel } from './friend-screen-model'
 
@@ -13,7 +14,6 @@ export type FriendScreenProps = ScreenProps<'Friend'>
 export const FriendScreen: FC<FriendScreenProps> = (props) => {
   const { route } = props
 
-  const navigation = useNavigation()
   const { wallets } = useUnit(friendScreenModel)
 
   useGate(friendScreenModel.gate, { friendId: route.params.id })
@@ -27,19 +27,17 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
       <Pager>
         {wallets.map((wallet) => (
           <Section key={wallet.currency}>
-            <ActionButton
-              onPress={() => {
-                navigation.navigate(Route.CreateTransaction, {
-                  displayName: route.params.displayName,
-                  id: route.params.id,
-                  currency: wallet.currency,
-                })
-              }}
+            <SectionHeading
+              action={
+                <CreateTransactionButton
+                  currency={wallet.currency}
+                  friendDisplayName={route.params.displayName}
+                  friendId={route.params.id}
+                />
+              }
             >
-              Create transaction
-            </ActionButton>
-
-            <Text variant="heading-m">Transactions</Text>
+              Transactions
+            </SectionHeading>
 
             <List listStyle="fill">
               {wallet.transactions.map((transaction) => (
