@@ -20,7 +20,7 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
 
   return (
     <ScreenLayout
-      actions={<CreateWalletButton />}
+      actions={<CreateWalletButton friendId={route.params.id} />}
       title={route.params.displayName}
       edgets={{ top: 'maximum', bottom: 'off' }}
     >

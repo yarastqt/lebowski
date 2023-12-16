@@ -1,5 +1,6 @@
 export * from './accept-invite'
 export * from './create-transaction'
+export * from './create-wallet'
 export * from './reject-or-revoke-invite'
 export * from './send-invite'
 export * from './subscribe-to-friend-list'

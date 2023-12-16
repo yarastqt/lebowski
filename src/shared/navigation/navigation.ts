@@ -21,7 +21,7 @@ export type RootStackParamList = {
   Settings: undefined
   Activity: undefined
   CreateTransaction: { displayName: string; id: string; currency: Currency }
-  CreateWallet: undefined
+  CreateWallet: { friendId: string }
   Profile: undefined
   Friend: { displayName: string; id: string }
 }
