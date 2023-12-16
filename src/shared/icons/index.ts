@@ -1,3 +1,4 @@
+export * from './arrow-short-forward-strong'
 export * from './arrow-short-left'
 export * from './bell'
 export * from './circle-group-outline'

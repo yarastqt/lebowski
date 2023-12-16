@@ -2,9 +2,10 @@ import { FC } from 'react'
 import { Text, View } from 'react-native'
 
 import { Currency } from '@app/shared/api'
+import { ArrowShortForwardStrong } from '@app/shared/icons'
 import { dateFormatter } from '@app/shared/lib/date'
 import { useNumberFormatter } from '@app/shared/lib/number'
-import { createStyles } from '@app/shared/theme'
+import { createStyles, useTheme } from '@app/shared/theme'
 
 export interface TransactionCardProps {
   addresseeName: string
@@ -18,6 +19,7 @@ export interface TransactionCardProps {
 export const TransactionCard: FC<TransactionCardProps> = (props) => {
   const { addresseeName, amount, comment, createdAt, currency, requesterName } = props
 
+  const theme = useTheme()
   const styles = useStyles()
 
   const currencyFormatter = useNumberFormatter({
@@ -35,6 +37,7 @@ export const TransactionCard: FC<TransactionCardProps> = (props) => {
       <View style={styles.footer}>
         <View style={styles.participants}>
           <Text style={styles.participant}>{requesterName}</Text>
+          <ArrowShortForwardStrong color={theme.color.textSecondary} size={12} />
           <Text style={styles.participant}>{addresseeName}</Text>
         </View>
 
@@ -69,6 +72,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   participants: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 4,
   },
