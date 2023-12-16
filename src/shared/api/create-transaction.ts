@@ -51,13 +51,13 @@ export async function createTransaction(params: CreateTransactionParams) {
   )
 
   const relationshipsSnapshot = await getDocs(relationshipQuery)
-  const relationshipDocument = relationshipsSnapshot.docs.at(0)
+  const relationshipSnapshot = relationshipsSnapshot.docs.at(0)
 
-  invariant(relationshipDocument, 'Relationship document is not accepted or defined')
+  invariant(relationshipSnapshot, 'Relationship document is not accepted or defined')
 
   const transactionId = doc(collection(firestore, 'transaction')).id
 
-  await updateDoc(relationshipDocument.ref, {
+  await updateDoc(relationshipSnapshot.ref, {
     [`wallets.${params.currency}.transactions.${transactionId}`]: {
       id: transactionId,
       addresseeRef,
