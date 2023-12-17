@@ -24,7 +24,7 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
         <Text variant="heading-m">Create transaction</Text>
 
         <Form>
-          <TextField {...fields.amount.props} label="Amount" keyboardType="number-pad" />
+          <TextField {...fields.amount.props} label="Amount" keyboardType="decimal-pad" />
           <TextField {...fields.comment.props} label="Comment" />
           <TextField isReadOnly defaultValue={route.params.currency} label="Currency" />
           <Swiper

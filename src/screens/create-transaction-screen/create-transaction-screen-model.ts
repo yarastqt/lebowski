@@ -38,7 +38,7 @@ const createDebtFx = attach({
     api.createTransaction({
       addresseeId: values.addressee.id,
       requesterId: values.requester.id,
-      amount: Number(values.amount),
+      amount: Number(values.amount.replace(',', '.')),
       comment: values.comment,
       currency: values.currency,
     }),

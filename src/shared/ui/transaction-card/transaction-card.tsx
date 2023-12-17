@@ -26,7 +26,7 @@ export const TransactionCard: FC<TransactionCardProps> = (props) => {
   const currencyFormatter = useNumberFormatter({
     style: 'currency',
     currency,
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
   })
 
   const isIncoming = state === 'incoming'
