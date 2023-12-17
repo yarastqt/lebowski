@@ -5,14 +5,16 @@ import { useTheme } from '@app/shared/theme'
 import { TypographyParams } from '@app/shared/theme/types'
 
 type TextVariant = 'heading-m' | 'text-l' | 'text-m' | 'text-s'
+type TextColor = 'primary' | 'secondary' | 'positive' | 'negative'
 
 export interface TextProps {
   children: ReactNode
-  variant: TextVariant
+  color?: TextColor
+  variant?: TextVariant
 }
 
 export const Text: FC<TextProps> = (props) => {
-  const { children, variant } = props
+  const { children, color = 'primary', variant = 'text-m' } = props
 
   const theme = useTheme()
 
@@ -23,7 +25,12 @@ export const Text: FC<TextProps> = (props) => {
     'text-s': theme.typography.textS,
   }
 
-  return (
-    <BaseText style={{ ...variants[variant], color: theme.color.textPrimary }}>{children}</BaseText>
-  )
+  const colors: Record<TextColor, string> = {
+    primary: theme.color.textPrimary,
+    secondary: theme.color.textSecondary,
+    positive: theme.color.statusPositive,
+    negative: theme.color.statusNegative,
+  }
+
+  return <BaseText style={{ ...variants[variant], color: colors[color] }}>{children}</BaseText>
 }
