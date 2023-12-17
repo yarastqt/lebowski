@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import Animated, { FadeIn, FadeInLeft, FadeInRight } from 'react-native-reanimated'
 
 import { ArrowShortLeft } from '@app/shared/icons'
 import { useNavigation } from '@app/shared/navigation'
@@ -21,13 +22,22 @@ export const Header: FC<HeaderProps> = (props) => {
 
   return (
     <View style={[styles.root, isHasActions && styles.rootWithActions]}>
-      <IconButton size={44} onPress={() => navigation.goBack()}>
-        <ArrowShortLeft size={24} />
-      </IconButton>
+      <Animated.View entering={FadeInRight.delay(150).springify()}>
+        <IconButton size={44} onPress={() => navigation.goBack()}>
+          <ArrowShortLeft size={24} />
+        </IconButton>
+      </Animated.View>
 
-      <Text style={[styles.title, isHasActions && styles.titleWithActions]}>{children}</Text>
+      <Animated.Text
+        entering={FadeIn.delay(300).springify()}
+        style={[styles.title, isHasActions && styles.titleWithActions]}
+      >
+        {children}
+      </Animated.Text>
 
-      <View style={styles.actions}>{actions}</View>
+      <Animated.View entering={FadeInLeft.delay(150).springify()} style={styles.actions}>
+        {actions}
+      </Animated.View>
     </View>
   )
 }
