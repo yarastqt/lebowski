@@ -21,12 +21,16 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
   return (
     <BaseLayout edgets={{ top: 'off' }}>
       <Section>
-        <Text variant="heading-m">Create transaction</Text>
+        <Text variant="heading-m">
+          Create transaction{' '}
+          <Text variant="heading-m" color="positive">
+            {route.params.currency.toUpperCase()}
+          </Text>
+        </Text>
 
         <Form>
           <TextField {...fields.amount.props} label="Amount" keyboardType="decimal-pad" />
           <TextField {...fields.comment.props} label="Comment" />
-          <TextField isReadOnly defaultValue={route.params.currency} label="Currency" />
           <Swiper
             from={fields.requester.displayName.value}
             to={fields.addressee.displayName.value}
