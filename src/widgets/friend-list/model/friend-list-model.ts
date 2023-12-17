@@ -11,18 +11,24 @@ const selectedFriendReseted = createEvent()
 const selectFriendPressed = createEvent<Friend>()
 
 const friendsUpdated = createEvent<Friend[]>()
+const loadingFinished = createEvent()
 
 const $friends = createStore<Friend[]>([])
 const $selectedFriend = createStore<Friend | null>(null)
+const $isLoading = createStore(true)
 
 const subscribeToPendingInviteListFx = attach({
-  source: sessionModel.$user,
-  effect: (user) => {
+  source: [sessionModel.$user, $isLoading],
+  effect: ([user, isLoading]) => {
     invariant(user?.id, 'User is not defined')
 
     api.subscribeToFriendList({
       params: { userId: user.id },
       onData: (friends) => {
+        if (isLoading) {
+          scopeBind(loadingFinished, { scope })()
+        }
+
         scopeBind(friendsUpdated, { scope })(friends)
       },
     })
@@ -32,6 +38,12 @@ const subscribeToPendingInviteListFx = attach({
 sample({
   clock: widgetMounted,
   target: subscribeToPendingInviteListFx,
+})
+
+sample({
+  clock: loadingFinished,
+  fn: () => false,
+  target: $isLoading,
 })
 
 sample({
@@ -52,6 +64,7 @@ sample({
 export const friendListModel = {
   '@@unitShape': () => ({
     friends: $friends,
+    isLoading: $isLoading,
     onSelectedFriendReset: selectedFriendReseted,
     onSelectFriendPress: selectFriendPressed,
     onWidgetMount: widgetMounted,

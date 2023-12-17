@@ -27,6 +27,8 @@ export interface Color {
   textSecondary: string
   mutedText: string
 
+  skeletonBg: string
+
   transparent: string
 }
 

@@ -30,6 +30,8 @@ export const darkTheme: Theme = {
     textSecondary: 'rgba(255, 253, 250, 0.5)',
     mutedText: 'rgba(250, 250, 255, 0.24)',
 
+    skeletonBg: 'rgba(35, 35, 36, 1)',
+
     transparent: 'transparent',
   },
 

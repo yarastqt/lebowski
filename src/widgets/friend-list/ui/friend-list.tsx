@@ -2,18 +2,28 @@ import { useUnit } from 'effector-react'
 import { FC, useEffect } from 'react'
 
 import { Route } from '@app/shared/navigation'
-import { List, UserListItem } from '@app/shared/ui'
+import { List, UserListItem, UserListItemSkeleton } from '@app/shared/ui'
 import { useNavigation } from '@react-navigation/native'
 
 import { friendListModel } from '../model'
 
 export const FriendList: FC = () => {
   const navigation = useNavigation()
-  const { friends, onWidgetMount } = useUnit(friendListModel)
+  const { isLoading, friends, onWidgetMount } = useUnit(friendListModel)
 
   useEffect(() => {
     onWidgetMount()
   }, [onWidgetMount])
+
+  if (isLoading) {
+    return (
+      <List listStyle="plain">
+        <UserListItemSkeleton />
+        <UserListItemSkeleton />
+        <UserListItemSkeleton />
+      </List>
+    )
+  }
 
   if (friends.length === 0) {
     return null
