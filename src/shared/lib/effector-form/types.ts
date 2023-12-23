@@ -1,5 +1,3 @@
-import { FocusEventHandler } from 'react'
-
 export type FormErrors = Record<string, string>
 
 export type Rule<Value = any> = (
@@ -24,9 +22,9 @@ type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
   : Rule<Value>
 
 export interface FieldInputProps<T> {
-  onBlur: FocusEventHandler<HTMLElement>
+  onBlur: () => void
   onChange: (value: T) => void
-  onFocus: FocusEventHandler<HTMLElement>
+  onFocus: () => void
   value: T
 }
 
