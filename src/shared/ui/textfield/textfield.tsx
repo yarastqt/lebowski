@@ -30,6 +30,7 @@ export interface TextFieldProps
     | 'autoFocus'
     | 'defaultValue'
     | 'keyboardType'
+    | 'maxLength'
     | 'onBlur'
     | 'onFocus'
     | 'secureTextEntry'
