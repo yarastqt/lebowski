@@ -1,7 +1,16 @@
 import * as Haptics from 'expo-haptics'
 import { FC, useEffect, useRef, useState } from 'react'
-import { TextInput, TextInputProps, View } from 'react-native'
+import {
+  NativeSyntheticEvent,
+  Text,
+  TextInput,
+  TextInputFocusEventData,
+  TextInputProps,
+  View,
+} from 'react-native'
 import Animated, {
+  FadeInUp,
+  FadeOutUp,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
@@ -9,7 +18,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated'
 
-import { EyeOffOutline, EyeOutline } from '@app/shared/icons'
+import { ErrorTrinagleStrong, EyeOffOutline, EyeOutline } from '@app/shared/icons'
 import { createStyles, useTheme } from '@app/shared/theme'
 import { useBottomSheetInternal } from '@gorhom/bottom-sheet'
 
@@ -18,15 +27,35 @@ import { IconButton } from '../icon-button'
 export interface TextFieldProps
   extends Pick<
     TextInputProps,
-    'secureTextEntry' | 'keyboardType' | 'value' | 'autoFocus' | 'defaultValue'
+    | 'autoFocus'
+    | 'defaultValue'
+    | 'keyboardType'
+    | 'onBlur'
+    | 'onFocus'
+    | 'secureTextEntry'
+    | 'value'
   > {
+  errorMessage?: string
+  isInvalid?: boolean
   isReadOnly?: boolean
   label: string
   onChange?: (value: string) => void
 }
 
 export const TextField: FC<TextFieldProps> = (props) => {
-  const { defaultValue, isReadOnly, label, onChange, secureTextEntry, value, ...otherProps } = props
+  const {
+    defaultValue,
+    errorMessage,
+    isInvalid,
+    isReadOnly,
+    label,
+    onBlur,
+    onChange,
+    onFocus,
+    secureTextEntry,
+    value,
+    ...otherProps
+  } = props
 
   const bottomSheetInternal = useBottomSheetInternal(true)
 
@@ -39,16 +68,18 @@ export const TextField: FC<TextFieldProps> = (props) => {
   const borderColor = useSharedValue(0)
   const labelPosition = useSharedValue(0)
 
-  const onFocus = () => {
+  const onFocusHandler = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
     if (bottomSheetInternal) {
       bottomSheetInternal.shouldHandleKeyboardEvents.value = true
     }
 
     borderColor.value = withSpring(1)
     labelPosition.value = withSpring(1)
+
+    onFocus?.(event)
   }
 
-  const onBlur = () => {
+  const onBlurHandler = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
     if (bottomSheetInternal) {
       bottomSheetInternal.shouldHandleKeyboardEvents.value = false
     }
@@ -59,6 +90,8 @@ export const TextField: FC<TextFieldProps> = (props) => {
       damping: 25,
       mass: 1,
     })
+
+    onBlur?.(event)
   }
 
   const togglePasswordVisibility = () => {
@@ -68,7 +101,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
     inputRef.current?.focus()
   }
 
-  const rootStyles = useAnimatedStyle(() => ({
+  const fieldStyles = useAnimatedStyle(() => ({
     borderColor: interpolateColor(
       borderColor.value,
       [0, 1],
@@ -91,38 +124,51 @@ export const TextField: FC<TextFieldProps> = (props) => {
   const EyeIcon = isSecureText ? EyeOutline : EyeOffOutline
 
   return (
-    <Animated.View style={[styles.root, rootStyles]}>
-      <Animated.Text style={[styles.label, labelStyles]}>{label}</Animated.Text>
+    <View style={styles.root}>
+      <Animated.View style={[styles.field, fieldStyles]}>
+        <Animated.Text style={[styles.label, labelStyles]}>{label}</Animated.Text>
 
-      <TextInput
-        {...otherProps}
-        autoCapitalize="none"
-        defaultValue={defaultValue}
-        editable={!isReadOnly}
-        keyboardAppearance={theme.colorScheme}
-        onBlur={onBlur}
-        onChangeText={onChange}
-        onFocus={onFocus}
-        ref={inputRef}
-        secureTextEntry={isSecureText}
-        selectionColor={theme.color.textPrimary}
-        style={styles.input}
-        value={value}
-      />
+        <TextInput
+          {...otherProps}
+          autoCapitalize="none"
+          defaultValue={defaultValue}
+          editable={!isReadOnly}
+          keyboardAppearance={theme.colorScheme}
+          onBlur={onBlurHandler}
+          onChangeText={onChange}
+          onFocus={onFocusHandler}
+          ref={inputRef}
+          secureTextEntry={isSecureText}
+          selectionColor={theme.color.textPrimary}
+          style={styles.input}
+          value={value}
+        />
 
-      {secureTextEntry && (
-        <View style={styles.after}>
-          <IconButton onPress={togglePasswordVisibility} size={44}>
-            <EyeIcon size={24} color={theme.color.textSecondary} />
-          </IconButton>
-        </View>
+        {secureTextEntry && (
+          <View style={styles.after}>
+            <IconButton onPress={togglePasswordVisibility} size={44}>
+              <EyeIcon size={24} color={theme.color.textSecondary} />
+            </IconButton>
+          </View>
+        )}
+      </Animated.View>
+
+      {isInvalid && errorMessage && (
+        <Animated.View entering={FadeInUp} exiting={FadeOutUp} style={styles.hint}>
+          <ErrorTrinagleStrong color={theme.color.statusNegative} size={16} />
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        </Animated.View>
       )}
-    </Animated.View>
+    </View>
   )
 }
 
 const useStyles = createStyles((theme) => ({
   root: {
+    gap: 8,
+  },
+
+  field: {
     height: 64,
     borderRadius: 20,
     borderWidth: 2,
@@ -150,5 +196,15 @@ const useStyles = createStyles((theme) => ({
     position: 'absolute',
     right: 10,
     top: 0,
+  },
+
+  hint: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+
+  errorMessage: {
+    ...theme.typography.textS,
+    color: theme.color.statusNegative,
   },
 }))
