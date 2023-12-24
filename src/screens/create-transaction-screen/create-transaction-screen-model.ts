@@ -4,6 +4,7 @@ import invariant from 'ts-invariant'
 
 import { Currency, api } from '@app/shared/api'
 import { createForm, rules } from '@app/shared/lib/effector-form'
+import { toNormalizedNumber } from '@app/shared/lib/number'
 import { navigationModel } from '@app/shared/navigation'
 import { sessionModel } from '@app/shared/session'
 
@@ -26,7 +27,10 @@ const form = createForm<FormValues>({
     requester: { id: '', displayName: '' },
   },
   validate: rules.config(() => ({
-    amount: rules.required('Amount is required'),
+    amount: rules.combine(
+      rules.required('Amount is required'),
+      rules.not('0', 'Amount is required'),
+    ),
   })),
 })
 
@@ -38,7 +42,7 @@ const createDebtFx = attach({
     api.createTransaction({
       addresseeId: values.addressee.id,
       requesterId: values.requester.id,
-      amount: Number(values.amount.replace(',', '.')),
+      amount: toNormalizedNumber(values.amount),
       comment: values.comment,
       currency: values.currency,
     }),

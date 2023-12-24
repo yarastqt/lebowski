@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
 import { ScreenProps } from '@app/shared/navigation'
-import { ActionButton, Form, Section, Swiper, Text, TextField } from '@app/shared/ui'
+import { ActionButton, CurrencyField, Form, Section, Swiper, Text, TextField } from '@app/shared/ui'
 
 import { createTransactionScreenModel } from './create-transaction-screen-model'
 
@@ -29,8 +29,19 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
         </Text>
 
         <Form>
-          <TextField {...fields.amount.props} label="Amount" keyboardType="decimal-pad" />
-          <TextField {...fields.comment.props} label="Comment" />
+          <CurrencyField
+            {...fields.amount.props}
+            errorMessage={fields.amount.error}
+            isInvalid={fields.amount.isInvalid}
+            label="Amount"
+          />
+          <TextField
+            {...fields.comment.props}
+            errorMessage={fields.comment.error}
+            isInvalid={fields.comment.isInvalid}
+            label="Comment"
+            maxLength={120}
+          />
           <Swiper
             from={fields.requester.displayName.value}
             to={fields.addressee.displayName.value}

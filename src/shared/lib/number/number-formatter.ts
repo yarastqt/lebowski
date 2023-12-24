@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 export interface UseNumberFormatterOptions {
-  style: string
+  style?: string
   currency?: string
   maximumFractionDigits?: number
 }
@@ -10,4 +10,8 @@ export function useNumberFormatter(options: UseNumberFormatterOptions) {
   return useMemo(() => {
     return new Intl.NumberFormat('ru', options)
   }, [])
+}
+
+export function toNormalizedNumber(value: string) {
+  return Number(value.replace(',', '.'))
 }

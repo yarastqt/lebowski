@@ -28,19 +28,20 @@ export interface TextFieldProps
   extends Pick<
     TextInputProps,
     | 'autoFocus'
+    | 'contextMenuHidden'
     | 'defaultValue'
     | 'keyboardType'
     | 'maxLength'
     | 'onBlur'
     | 'onFocus'
     | 'secureTextEntry'
-    | 'value'
   > {
   errorMessage?: string
   isInvalid?: boolean
   isReadOnly?: boolean
   label: string
-  onChange?: (value: string) => void
+  onChange: (value: string) => void
+  value: string
 }
 
 export const TextField: FC<TextFieldProps> = (props) => {

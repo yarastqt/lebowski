@@ -1,6 +1,7 @@
 export * from './action-button'
 export * from './avatar'
 export * from './bottom-sheet'
+export * from './currency-field'
 export * from './form'
 export * from './group'
 export * from './icon-button'
