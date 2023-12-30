@@ -1,5 +1,5 @@
-import { FC, ReactNode, useCallback, useEffect } from 'react'
-import { Pressable, Text } from 'react-native'
+import { FC, ReactNode, useCallback, useEffect, useRef } from 'react'
+import { Pressable } from 'react-native'
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -19,6 +19,9 @@ export interface ActionButtonProps {
 export const ActionButton: FC<ActionButtonProps> = (props) => {
   const { children, isDisabled, isPending, onPress } = props
 
+  const interactiveRef = useRef({ isDisabled, isPending })
+  interactiveRef.current = { isDisabled, isPending }
+
   const theme = useTheme()
   const styles = useStyles()
 
@@ -33,7 +36,10 @@ export const ActionButton: FC<ActionButtonProps> = (props) => {
 
   const onPressOut = useCallback(() => {
     scale.value = withSpring(1)
-    backgroundColor.value = withSpring(0)
+
+    if (!interactiveRef.current.isDisabled && !interactiveRef.current.isPending) {
+      backgroundColor.value = withSpring(0)
+    }
   }, [])
 
   const rootStyles = useAnimatedStyle(() => ({
