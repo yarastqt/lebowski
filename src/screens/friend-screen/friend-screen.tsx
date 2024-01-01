@@ -8,6 +8,7 @@ import { ScreenProps } from '@app/shared/navigation'
 import { List, Pager, Section, SectionHeading, TransactionCard } from '@app/shared/ui'
 
 import { friendScreenModel } from './friend-screen-model'
+import { BalanceCard } from './ui/balance-card'
 
 export type FriendScreenProps = ScreenProps<'Friend'>
 
@@ -27,6 +28,8 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
       <Pager>
         {wallets.map((wallet) => (
           <Section key={wallet.currency}>
+            <BalanceCard currency={wallet.currency}>{wallet.amount}</BalanceCard>
+
             <SectionHeading
               action={
                 <CreateTransactionButton

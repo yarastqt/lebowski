@@ -62,11 +62,16 @@ export async function subscribeToRelationshipWallet(payload: {
 
     const relationship = doc.data() as RelationshipDocument
     const wallets = Object.entries(relationship.wallets)
-      .map<RelationshipWallet>(([currency, wallet]) => ({
-        currency: currency as Currency,
-        amount: wallet.amount,
-        transactions: Object.values(wallet.transactions)
-          .map<RelationshipTransaction>((transaction) => ({
+      .map<RelationshipWallet>(([currency, wallet]) => {
+        let amount = 0
+        const transactions: RelationshipTransaction[] = []
+
+        for (const transaction of Object.values(wallet.transactions)) {
+          const ratio = transaction.requesterRef.id === userRef.id ? 1 : -1
+
+          amount += transaction.amount * ratio
+
+          transactions.push({
             id: transaction.id,
             amount: transaction.amount,
             comment: transaction.comment,
@@ -76,9 +81,15 @@ export async function subscribeToRelationshipWallet(payload: {
             addresseeName:
               transaction.addresseeRef.id === userRef.id ? user.displayName : friend.displayName,
             state: transaction.requesterRef.id === userRef.id ? 'outgoing' : 'incoming',
-          }))
-          .sort((a, b) => b.createdAt - a.createdAt),
-      }))
+          })
+        }
+
+        return {
+          currency: currency as Currency,
+          amount,
+          transactions: transactions.sort((a, b) => b.createdAt - a.createdAt),
+        }
+      })
       .sort((a, b) => a.currency.localeCompare(b.currency))
 
     payload.onData(wallets)
