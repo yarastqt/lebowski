@@ -21,8 +21,17 @@ export const BalanceCard: FC<BalanceCardProps> = (props) => {
     maximumFractionDigits: 2,
   })
 
-  const isPositive = children > 0
-  const amountColor = isPositive ? theme.color.statusPositive : theme.color.statusNegative
+  const amountColor = (() => {
+    if (children == 0) {
+      return theme.color.textSecondary
+    }
+
+    if (children > 0) {
+      return theme.color.statusPositive
+    }
+
+    return theme.color.statusNegative
+  })()
 
   return (
     <View style={styles.root}>
@@ -44,6 +53,6 @@ const useStyles = createStyles((theme) => ({
 
   amount: {
     ...theme.typography.headingM,
-    lineHeight: 56,
+    lineHeight: 72,
   },
 }))
