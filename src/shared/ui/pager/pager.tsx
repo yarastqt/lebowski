@@ -26,14 +26,16 @@ export const Pager: FC<PagerProps> = (props) => {
 
   return (
     <View style={styles.root}>
-      <View style={[styles.navigation, { bottom: insets.bottom + 24 }]}>
-        {pages.map((_, index) => (
-          <View
-            key={index}
-            style={[styles.indicator, index === activePageIndex && styles.indicatorIsActive]}
-          />
-        ))}
-      </View>
+      {pages.length > 1 && (
+        <View style={[styles.navigation, { bottom: insets.bottom + 24 }]}>
+          {pages.map((_, index) => (
+            <View
+              key={index}
+              style={[styles.indicator, index === activePageIndex && styles.indicatorIsActive]}
+            />
+          ))}
+        </View>
+      )}
 
       <PagerView
         initialPage={activePageIndex}
