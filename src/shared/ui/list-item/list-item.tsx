@@ -10,6 +10,7 @@ import Animated, {
 import { createStyles, useTheme } from '@app/shared/theme'
 
 export interface ListItemProps {
+  after?: ReactNode
   before?: ReactNode
   description?: string
   onPress: () => void
@@ -18,7 +19,7 @@ export interface ListItemProps {
 }
 
 export const ListItem: FC<ListItemProps> = (props) => {
-  const { before, description, onPress, title, variant } = props
+  const { after, before, description, onPress, title, variant } = props
 
   const theme = useTheme()
   const styles = useStyles()
@@ -52,6 +53,8 @@ export const ListItem: FC<ListItemProps> = (props) => {
           <Text style={[styles.title, isDangerVariant && styles.title$isDanger]}>{title}</Text>
           {description && <Text style={styles.description}>{description}</Text>}
         </View>
+
+        {after}
       </Animated.View>
     </Pressable>
   )
@@ -69,6 +72,7 @@ const useStyles = createStyles((theme) => ({
 
   heading: {
     gap: 2,
+    flex: 1,
   },
 
   title: {
