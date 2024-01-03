@@ -5,17 +5,18 @@ import { CreateTransactionButton } from '@app/features/create-transaction'
 import { CreateWalletButton } from '@app/features/create-wallet'
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { ScreenProps } from '@app/shared/navigation'
-import { List, Pager, Section, SectionHeading, TransactionCard } from '@app/shared/ui'
+import { Pager, Section, SectionHeading } from '@app/shared/ui'
 
 import { friendScreenModel } from './friend-screen-model'
 import { BalanceCard } from './ui/balance-card'
+import { TransactionList } from './ui/transaction-list'
 
 export type FriendScreenProps = ScreenProps<'Friend'>
 
 export const FriendScreen: FC<FriendScreenProps> = (props) => {
   const { route } = props
 
-  const { wallets } = useUnit(friendScreenModel)
+  const { isLoading, wallets } = useUnit(friendScreenModel)
 
   useGate(friendScreenModel.gate, { friendId: route.params.id })
 
@@ -28,7 +29,9 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
       <Pager>
         {wallets.map((wallet) => (
           <Section key={wallet.currency}>
-            <BalanceCard currency={wallet.currency}>{wallet.amount}</BalanceCard>
+            <BalanceCard isLoading={isLoading} currency={wallet.currency}>
+              {wallet.amount}
+            </BalanceCard>
 
             <SectionHeading
               action={
@@ -42,20 +45,11 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
               Transactions
             </SectionHeading>
 
-            <List listStyle="fill">
-              {wallet.transactions.map((transaction) => (
-                <TransactionCard
-                  key={transaction.id}
-                  addresseeName={transaction.addresseeName}
-                  amount={transaction.amount}
-                  comment={transaction.comment}
-                  createdAt={transaction.createdAt}
-                  currency={wallet.currency}
-                  requesterName={transaction.requesterName}
-                  state={transaction.state}
-                />
-              ))}
-            </List>
+            <TransactionList
+              currency={wallet.currency}
+              data={wallet.transactions}
+              isLoading={isLoading}
+            />
           </Section>
         ))}
       </Pager>

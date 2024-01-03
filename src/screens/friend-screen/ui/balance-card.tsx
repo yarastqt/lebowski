@@ -5,13 +5,16 @@ import { Currency } from '@app/shared/api'
 import { useNumberFormatter } from '@app/shared/lib/number'
 import { createStyles, useTheme } from '@app/shared/theme'
 
+import { BalanceCardSkeleton } from './balance-card-skeleton'
+
 export interface BalanceCardProps {
   children: number
   currency: Currency
+  isLoading: boolean
 }
 
 export const BalanceCard: FC<BalanceCardProps> = (props) => {
-  const { children, currency } = props
+  const { children, currency, isLoading } = props
 
   const theme = useTheme()
   const styles = useStyles()
@@ -32,6 +35,10 @@ export const BalanceCard: FC<BalanceCardProps> = (props) => {
 
     return theme.color.statusNegative
   })()
+
+  if (isLoading) {
+    return <BalanceCardSkeleton />
+  }
 
   return (
     <View style={styles.root}>
