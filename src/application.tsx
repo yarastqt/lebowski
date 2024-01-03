@@ -48,17 +48,15 @@ export const Application: FC = () => {
 
   return (
     <Provider value={scope}>
-      <DismissKeyboard>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider>
-              <NavigationContainer>
-                <RootScreens />
-              </NavigationContainer>
-            </SafeAreaProvider>
-          </BottomSheetModalProvider>
-        </GestureHandlerRootView>
-      </DismissKeyboard>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <RootScreens />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </Provider>
   )
 }

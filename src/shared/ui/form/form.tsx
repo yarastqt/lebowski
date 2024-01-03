@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import { createStyles } from '@app/shared/theme'
 
@@ -12,7 +12,11 @@ export const Form: FC<FormProps> = (props) => {
 
   const styles = useStyles()
 
-  return <View style={styles.root}>{children}</View>
+  return (
+    <ScrollView keyboardShouldPersistTaps="handled">
+      <View style={styles.root}>{children}</View>
+    </ScrollView>
+  )
 }
 
 const useStyles = createStyles(() => ({
