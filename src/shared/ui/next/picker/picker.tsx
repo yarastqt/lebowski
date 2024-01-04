@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Animated, {
   Easing,
@@ -17,15 +17,15 @@ import { createStyles, useTheme } from '@app/shared/theme'
 import { List } from '../../list'
 import { ListItem } from '../../list-item'
 
-export interface PickerProps {
+export interface PickerProps<T> {
   items: { id: string; title: string }[]
   label: string
-  onChange: (value: string) => void
+  onChange: (value: T) => void
   title: string
-  value: string
+  value: T
 }
 
-export const Picker: FC<PickerProps> = (props) => {
+export function Picker<T>(props: PickerProps<T>) {
   const { items, label, onChange, title, value } = props
 
   const theme = useTheme()
@@ -41,7 +41,7 @@ export const Picker: FC<PickerProps> = (props) => {
 
   const onSelect = (id: string) => {
     setOpen(false)
-    onChange(id)
+    onChange(id as T)
   }
 
   const onPressIn = () => {
