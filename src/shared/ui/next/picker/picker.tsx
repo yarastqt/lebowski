@@ -41,7 +41,10 @@ export function Picker<T>(props: PickerProps<T>) {
 
   const onSelect = (id: string) => {
     setOpen(false)
-    onChange(id as T)
+
+    if (id !== value) {
+      onChange(id as T)
+    }
   }
 
   const onPressIn = () => {
