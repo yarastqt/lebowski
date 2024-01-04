@@ -1,13 +1,14 @@
 import { attach, combine, createEvent, createStore, sample, scopeBind } from 'effector'
 import { onAuthStateChanged } from 'firebase/auth'
-import { QueryDocumentSnapshot, doc, getDoc } from 'firebase/firestore'
+import { QueryDocumentSnapshot, doc, getDoc, onSnapshot } from 'firebase/firestore'
+import invariant from 'ts-invariant'
 
 import { User, UserDocument } from '@app/shared/api'
 import { scope } from '@app/shared/config'
 import { $fireauth, $firestore, firebaseAttached } from '@app/shared/firebase'
 
 export const sessionModel = (() => {
-  const signedIn = createEvent<User>()
+  const userUpdated = createEvent<User>()
   const signedOut = createEvent()
   const loadComplete = createEvent()
 
@@ -20,31 +21,21 @@ export const sessionModel = (() => {
     effect: ([fireauth, firestore]) => {
       onAuthStateChanged(fireauth, async (payload) => {
         if (payload) {
-          const userRef = doc(firestore, 'users', payload.uid).withConverter({
-            toFirestore: () => {
-              throw new Error('Not implemented')
-            },
+          const userRef = doc(firestore, 'users', payload.uid)
 
-            fromFirestore: (snapshot: QueryDocumentSnapshot) => {
-              const data = snapshot.data() as UserDocument
+          onSnapshot(userRef, (snapshot) => {
+            const userDocument = snapshot.data() as UserDocument | undefined
 
-              return data satisfies User
-            },
+            invariant(userDocument, `Cannot find user with uid: ${payload.uid}`)
+
+            // TODO: Refactor all code.
+            scopeBind(userUpdated, { scope })(userDocument)
+            scopeBind(loadComplete, { scope })()
           })
-          const userSnapshot = await getDoc(userRef)
-
-          if (!userSnapshot.exists()) {
-            throw new Error(`Cannot find user with uid: ${payload.uid}`)
-          }
-
-          const user = userSnapshot.data()
-
-          scopeBind(signedIn, { scope })(user)
         } else {
           scopeBind(signedOut, { scope })()
+          scopeBind(loadComplete, { scope })()
         }
-
-        scopeBind(loadComplete, { scope })()
       })
     },
   })
@@ -55,7 +46,7 @@ export const sessionModel = (() => {
   })
 
   sample({
-    clock: signedIn,
+    clock: userUpdated,
     target: $user,
   })
 
