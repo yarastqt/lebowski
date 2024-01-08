@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { Dimensions, Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Animated, {
   Easing,
   FadeIn,
@@ -9,7 +9,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { ArrowShortBottom, Check } from '@app/shared/icons'
 import { createStyles, useTheme } from '@app/shared/theme'
@@ -31,7 +30,6 @@ export function Picker<T>(props: PickerProps<T>) {
   const theme = useTheme()
   const styles = useStyles()
 
-  const insets = useSafeAreaInsets()
   const [isOpen, setOpen] = useState(false)
 
   const borderColor = useSharedValue(0)
@@ -124,7 +122,7 @@ export function Picker<T>(props: PickerProps<T>) {
           <Animated.View entering={FadeIn.delay(200)} style={styles.underlay} />
         </TouchableWithoutFeedback>
 
-        <View style={[styles.container, { bottom: insets.bottom + 8 }]}>
+        <View style={styles.container}>
           <Text style={styles.heading}>{title}</Text>
           <List listStyle="plain">
             {items.map((item) => (
@@ -142,6 +140,8 @@ export function Picker<T>(props: PickerProps<T>) {
     </View>
   )
 }
+
+const WINDOW_HEIGHT = Dimensions.get('window').height
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -182,9 +182,13 @@ const useStyles = createStyles((theme) => ({
 
   container: {
     backgroundColor: theme.color.surfaceSubmerged,
+    // TODO: Use built in radius.
+    borderBottomEndRadius: 42,
+    borderBottomStartRadius: 42,
     borderRadius: 32,
+    bottom: 8,
     left: 8,
-    maxHeight: 520,
+    maxHeight: WINDOW_HEIGHT * 0.6,
     overflow: 'hidden',
     padding: 24,
     position: 'absolute',
