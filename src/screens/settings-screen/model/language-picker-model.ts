@@ -1,11 +1,9 @@
 import { createEffect, createEvent, sample } from 'effector'
 
 import { Language, api } from '@app/shared/api'
-import { sessionModel } from '@app/shared/session'
+import { i18nModel } from '@app/shared/i18n'
 
 const languageChanged = createEvent<Language>()
-
-const $language = sessionModel.$user.map((user) => user?.settings.language ?? Language.En)
 
 const updateLanguageFx = createEffect((language: Language) => {
   return api.updateSettings({ language })
@@ -13,12 +11,12 @@ const updateLanguageFx = createEffect((language: Language) => {
 
 sample({
   clock: languageChanged,
-  target: [updateLanguageFx],
+  target: updateLanguageFx,
 })
 
 export const languagePickerModel = {
   '@@unitShape': () => ({
-    language: $language,
+    language: i18nModel.$language,
     onLanguageChange: languageChanged,
   }),
 }
