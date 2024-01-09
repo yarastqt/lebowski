@@ -33,3 +33,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# locales
+src/shared/i18n/locales/**/*.ts
+src/shared/i18n/locales/**/*.d.ts

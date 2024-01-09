@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { RootScreens } from '@app/screens'
 import { appStarted, scope } from '@app/shared/config'
 import '@app/shared/firebase'
+import { I18nProvider, i18n } from '@app/shared/i18n'
 import { sessionModel } from '@app/shared/session'
 import { useLoadFonts } from '@app/shared/theme'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
@@ -46,16 +47,18 @@ export const Application: FC = () => {
   }
 
   return (
-    <Provider value={scope}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <SafeAreaProvider>
-            <NavigationContainer>
-              <RootScreens />
-            </NavigationContainer>
-          </SafeAreaProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </Provider>
+    <I18nProvider i18n={i18n}>
+      <Provider value={scope}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <RootScreens />
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </Provider>
+    </I18nProvider>
   )
 }
