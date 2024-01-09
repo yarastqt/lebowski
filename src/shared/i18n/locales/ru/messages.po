@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/screens/main-screen/main-screen.tsx:13
+#: src/screens/main-screen/main-screen.tsx:14
 msgid "Friends"
 msgstr "Друзья"
+
+#: src/features/send-invite/ui/send-invite-button.tsx:18
+msgid "Invite"
+msgstr "Пригласить"
