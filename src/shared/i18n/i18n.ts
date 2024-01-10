@@ -7,7 +7,7 @@ import { i18n } from '@lingui/core'
 import { messages as en } from './locales/en/messages'
 import { messages as ru } from './locales/ru/messages'
 
-export { I18nProvider } from '@lingui/react'
+export { I18nProvider, useLingui } from '@lingui/react'
 export { i18n }
 
 i18n.load({ en, ru })

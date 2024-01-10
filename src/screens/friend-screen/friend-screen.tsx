@@ -6,6 +6,7 @@ import { CreateWalletButton } from '@app/features/create-wallet'
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { ScreenProps } from '@app/shared/navigation'
 import { Pager, Section, SectionHeading } from '@app/shared/ui'
+import { Trans } from '@lingui/macro'
 
 import { friendScreenModel } from './friend-screen-model'
 import { BalanceCard } from './ui/balance-card'
@@ -42,7 +43,7 @@ export const FriendScreen: FC<FriendScreenProps> = (props) => {
                 />
               }
             >
-              Transactions
+              <Trans>Transactions</Trans>
             </SectionHeading>
 
             <TransactionList

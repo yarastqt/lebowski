@@ -13,10 +13,71 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/screens/activity/activity-screen.tsx:9
+msgid "Activity"
+msgstr "Activity"
+
+#: src/screens/create-transaction-screen/create-transaction-screen.tsx:37
+msgid "Amount"
+msgstr "Amount"
+
+#: src/screens/create-transaction-screen/create-transaction-screen.tsx:43
+msgid "Comment"
+msgstr "Comment"
+
+#: src/screens/create-transaction-screen/create-transaction-screen.tsx:53
+msgid "Creat"
+msgstr "Creat"
+
+#: src/features/create-transaction/ui/create-transaction-button.tsx:33
+msgid "Create"
+msgstr "Create"
+
+#: src/screens/create-transaction-screen/create-transaction-screen.tsx:26
+msgid "Create transaction"
+msgstr "Create transaction"
+
+#: src/screens/create-transaction-screen/create-transaction-screen.tsx:53
+msgid "Creating..."
+msgstr "Creating..."
+
 #: src/screens/main-screen/main-screen.tsx:14
 msgid "Friends"
 msgstr "Friends"
 
+#: src/screens/settings-screen/settings-screen.tsx:19
+msgid "Interface"
+msgstr "Interface"
+
 #: src/features/send-invite/ui/send-invite-button.tsx:18
 msgid "Invite"
 msgstr "Invite"
+
+#: src/screens/settings-screen/ui/language-picker.tsx:15
+msgid "Language"
+msgstr "Language"
+
+#: src/screens/profile-screen/profile-screen.tsx:17
+msgid "Profile"
+msgstr "Profile"
+
+#: src/screens/settings-screen/ui/language-picker.tsx:14
+msgid "Select language"
+msgstr "Select language"
+
+#: src/screens/profile-screen/profile-screen.tsx:24
+#: src/screens/settings-screen/settings-screen.tsx:16
+msgid "Settings"
+msgstr "Settings"
+
+#: src/features/share-profile/ui/share-profile-list-item.tsx:9
+msgid "Share profile"
+msgstr "Share profile"
+
+#: src/features/sign-out/ui/sign-out-list-item.tsx:20
+msgid "Sign out"
+msgstr "Sign out"
+
+#: src/screens/friend-screen/friend-screen.tsx:46
+msgid "Transactions"
+msgstr "Transactions"

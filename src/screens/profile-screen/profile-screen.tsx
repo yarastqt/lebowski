@@ -7,20 +7,21 @@ import { CircleGroupOutline } from '@app/shared/icons'
 import { Route } from '@app/shared/navigation'
 import { List, ListItem, Section } from '@app/shared/ui'
 import { ProfileInfo } from '@app/widgets/profile-info'
+import { Trans } from '@lingui/macro'
 import { useNavigation } from '@react-navigation/native'
 
 export const ProfileScreen: FC = () => {
   const navigation = useNavigation()
 
   return (
-    <ScreenLayout title="Profile">
+    <ScreenLayout title={<Trans>Profile</Trans>}>
       <Section>
         <ProfileInfo />
 
         <List>
           <ListItem
             before={<CircleGroupOutline size={24} />}
-            title="Settings"
+            title={<Trans>Settings</Trans>}
             onPress={() => navigation.navigate(Route.Settings)}
           />
           <ShareProfileListItem />

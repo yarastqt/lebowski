@@ -5,6 +5,7 @@ import { Plus } from '@app/shared/icons'
 import { Route, useNavigation } from '@app/shared/navigation'
 import { useTheme } from '@app/shared/theme'
 import { TextButton } from '@app/shared/ui'
+import { Trans } from '@lingui/macro'
 
 export interface CreateTransactionButtonProps {
   currency: Currency
@@ -29,7 +30,7 @@ export const CreateTransactionButton: FC<CreateTransactionButtonProps> = (props)
         })
       }}
     >
-      Create
+      <Trans>Create</Trans>
     </TextButton>
   )
 }

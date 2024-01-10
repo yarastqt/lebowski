@@ -2,6 +2,7 @@ import { useUnit } from 'effector-react'
 import { FC } from 'react'
 
 import { Picker } from '@app/shared/ui/next'
+import { Trans } from '@lingui/macro'
 
 import { languagePickerModel } from '../model'
 
@@ -10,8 +11,8 @@ export const LanguagePicker: FC = () => {
 
   return (
     <Picker
-      title="Select language"
-      label="Language"
+      title={<Trans>Select language</Trans>}
+      label={<Trans>Language</Trans>}
       items={[
         { id: 'ru', title: 'Russian' },
         { id: 'en', title: 'English' },

@@ -14,7 +14,7 @@ export interface ListItemProps {
   before?: ReactNode
   description?: string
   onPress: () => void
-  title: string
+  title: ReactNode
   variant?: 'default' | 'danger'
 }
 

@@ -8,7 +8,7 @@ export interface ScreenLayoutProps {
   actions?: ReactNode
   children: ReactNode
   edgets?: Edges
-  title: string
+  title: ReactNode
 }
 
 export const ScreenLayout: FC<ScreenLayoutProps> = (props) => {

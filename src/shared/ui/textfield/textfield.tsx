@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, ReactNode, useEffect, useRef, useState } from 'react'
 import {
   NativeSyntheticEvent,
   Text,
@@ -39,7 +39,7 @@ export interface TextFieldProps
   errorMessage?: string
   isInvalid?: boolean
   isReadOnly?: boolean
-  label: string
+  label: ReactNode
   onChange: (value: string) => void
   value: string
 }

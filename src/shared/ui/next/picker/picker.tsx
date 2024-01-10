@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Dimensions, Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Animated, {
   Easing,
@@ -18,9 +18,9 @@ import { ListItem } from '../../list-item'
 
 export interface PickerProps<T> {
   items: { id: string; title: string }[]
-  label: string
+  label: ReactNode
   onChange: (value: T) => void
-  title: string
+  title: ReactNode
   value: T
 }
 

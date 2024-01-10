@@ -5,6 +5,7 @@ import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
 import { ScreenProps } from '@app/shared/navigation'
 import { ActionButton, CurrencyField, Form, Section, Swiper, Text, TextField } from '@app/shared/ui'
+import { Trans } from '@lingui/macro'
 
 import { createTransactionScreenModel } from './create-transaction-screen-model'
 
@@ -22,7 +23,7 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
     <BaseLayout edgets={{ top: 'off' }}>
       <Section>
         <Text variant="heading-m">
-          Create transaction{' '}
+          <Trans>Create transaction</Trans>{' '}
           <Text variant="heading-m" color="positive">
             {route.params.currency.toUpperCase()}
           </Text>
@@ -33,13 +34,13 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
             {...fields.amount.props}
             errorMessage={fields.amount.error}
             isInvalid={fields.amount.isInvalid}
-            label="Amount"
+            label={<Trans>Amount</Trans>}
           />
           <TextField
             {...fields.comment.props}
             errorMessage={fields.comment.error}
             isInvalid={fields.comment.isInvalid}
-            label="Comment"
+            label={<Trans>Comment</Trans>}
             maxLength={120}
           />
           <Swiper
@@ -49,7 +50,7 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
           />
 
           <ActionButton onPress={submit} isPending={isPending} isDisabled={isInvalid}>
-            {isPending ? 'Creating...' : 'Create'}
+            {isPending ? <Trans>Creating...</Trans> : <Trans>Creat</Trans>}
           </ActionButton>
         </Form>
       </Section>
