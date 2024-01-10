@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { ShareProfileListItem } from '@app/features/share-profile'
 import { SignOutListItem } from '@app/features/sign-out'
 import { ScreenLayout } from '@app/layouts/screen-layout'
-import { CircleGroupOutline } from '@app/shared/icons'
+import { SettingsOutline } from '@app/shared/icons'
 import { Route } from '@app/shared/navigation'
 import { List, ListItem, Section } from '@app/shared/ui'
 import { ProfileInfo } from '@app/widgets/profile-info'
@@ -20,7 +20,7 @@ export const ProfileScreen: FC = () => {
 
         <List>
           <ListItem
-            before={<CircleGroupOutline size={24} />}
+            before={<SettingsOutline size={24} />}
             title={<Trans>Settings</Trans>}
             onPress={() => navigation.navigate(Route.Settings)}
           />
