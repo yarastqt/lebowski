@@ -118,10 +118,10 @@ export const TextField: FC<TextFieldProps> = (props) => {
   }))
 
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue || value) {
       labelPosition.value = withSpring(1)
     }
-  }, [defaultValue])
+  }, [defaultValue, value])
 
   const EyeIcon = isSecureText ? EyeOutline : EyeOffOutline
 
