@@ -9,11 +9,14 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { MoreVertical } from '@app/shared/icons'
+import { Route, useNavigation } from '@app/shared/navigation'
 import { sessionModel } from '@app/shared/session'
 import { createStyles, useTheme } from '@app/shared/theme'
 import { Avatar } from '@app/shared/ui'
 
 export const ProfileInfo: FC = () => {
+  const { navigate } = useNavigation()
+
   const theme = useTheme()
   const styles = useStyles()
 
@@ -29,6 +32,10 @@ export const ProfileInfo: FC = () => {
     backgroundColor.value = withSpring(0)
   }, [])
 
+  const onPress = useCallback(() => {
+    navigate(Route.ProfileEditor)
+  }, [navigate])
+
   const rootStyles = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
       backgroundColor.value,
@@ -42,7 +49,7 @@ export const ProfileInfo: FC = () => {
   }
 
   return (
-    <Pressable onPressIn={onPressIn} onPressOut={onPressOut}>
+    <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={onPress}>
       <Animated.View style={[styles.root, rootStyles]}>
         <Avatar displayName={user.displayName} size={64} />
 
