@@ -3,6 +3,7 @@ import { FirebaseApp, initializeApp } from 'firebase/app'
 // @ts-expect-error
 import { Auth, getReactNativePersistence, initializeAuth } from 'firebase/auth'
 import { Firestore, getFirestore } from 'firebase/firestore'
+import { FirebaseStorage, getStorage } from 'firebase/storage'
 
 import { appStarted } from '@app/shared/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -23,8 +24,9 @@ const createFirebaseFx = createEffect(() => {
     persistence: getReactNativePersistence(AsyncStorage),
   })
   const firestore = getFirestore(firebase)
+  const storage = getStorage(firebase)
 
-  return { firebase, fireauth, firestore }
+  return { firebase, fireauth, firestore, storage }
 })
 
 export const firebaseAttached = createEvent()
@@ -32,6 +34,7 @@ export const firebaseAttached = createEvent()
 export const $firebase = createStore<FirebaseApp>(null)
 export const $fireauth = createStore<Auth>(null)
 export const $firestore = createStore<Firestore>(null)
+export const $storage = createStore<FirebaseStorage>(null)
 
 sample({
   clock: appStarted,
@@ -57,7 +60,20 @@ sample({
 })
 
 sample({
+  clock: createFirebaseFx.doneData,
+  fn: (payload) => payload.storage,
+  target: $storage,
+})
+
+sample({
   clock: createFirebaseFx.done,
   fn: () => null,
   target: firebaseAttached,
 })
+
+export const firebaseModel = {
+  $firebase,
+  $fireauth,
+  $firestore,
+  $storage,
+}

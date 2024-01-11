@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 import { BaseLayout } from '@app/layouts/base-layout'
 import { useForm } from '@app/shared/lib/effector-form'
-import { ActionButton, Form, Section, Text, TextField } from '@app/shared/ui'
+import { ActionButton, AvatarPicker, Form, Section, Text, TextField } from '@app/shared/ui'
 import { Trans } from '@lingui/macro'
 
 import { profileEditorModel } from './model'
@@ -22,6 +22,12 @@ export const ProfileEditorScreen: FC = () => {
         </Text>
 
         <Form>
+          <AvatarPicker
+            avatarUrl={fields.avatarUrl.value}
+            displayName={fields.displayName.value}
+            onChange={fields.avatarUrl.props.onChange}
+          />
+
           <TextField
             {...fields.displayName.props}
             errorMessage={fields.displayName.error}

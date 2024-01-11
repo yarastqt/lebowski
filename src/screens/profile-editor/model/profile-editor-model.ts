@@ -35,7 +35,10 @@ sample({
   clock: gate.open,
   source: sessionModel.$user,
   filter: Boolean,
-  fn: (user): FormValues => ({ displayName: user.displayName, avatarUrl: '' }),
+  fn: (user): FormValues => ({
+    displayName: user.displayName,
+    avatarUrl: user.avatarUrl,
+  }),
   target: form.setValues,
 })
 
