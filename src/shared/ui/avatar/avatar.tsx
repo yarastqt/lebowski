@@ -1,31 +1,49 @@
 import { FC } from 'react'
-import { Text, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 
-import { createStyles } from '@app/shared/theme'
+import { createStyles, useTheme } from '@app/shared/theme'
 
 export interface AvatarProps {
   displayName: string
   size: number
+  url?: string
 }
 
 export const Avatar: FC<AvatarProps> = (props) => {
-  const { displayName, size } = props
+  const { displayName, size, url } = props
 
+  const theme = useTheme()
   const styles = useStyles()
 
   return (
-    <View style={[styles.avatar, { width: size, height: size }]}>
-      <Text style={styles.avatarText}>{getAvatarText(displayName)}</Text>
+    <View
+      style={[
+        styles.root,
+        {
+          backgroundColor: url ? undefined : theme.color.statusPositive,
+          height: size,
+          width: size,
+        },
+      ]}
+    >
+      {url ? (
+        <Image height={size} source={{ uri: url }} style={styles.avatar} width={size} />
+      ) : (
+        <Text style={styles.avatarText}>{getAvatarText(displayName)}</Text>
+      )}
     </View>
   )
 }
 
 const useStyles = createStyles((theme) => ({
-  avatar: {
-    backgroundColor: theme.color.statusPositive,
+  root: {
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  avatar: {
+    borderRadius: 100,
   },
 
   avatarText: {
