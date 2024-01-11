@@ -46,6 +46,7 @@ export async function subscribeToFriendList(payload: {
 
       result.push({
         id: user.id,
+        avatarUrl: user.avatarUrl,
         displayName: user.displayName,
         email: user.email,
       })

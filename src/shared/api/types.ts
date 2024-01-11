@@ -50,6 +50,7 @@ export interface RelationshipWalletDocument {
 
 export interface User {
   id: string
+  avatarUrl: string
   createdAt: Timestamp
   displayName: string
   email: string
@@ -70,8 +71,9 @@ export interface Invite {
 
 export interface Friend {
   id: string
-  email: string
+  avatarUrl: string
   displayName: string
+  email: string
 }
 
 export interface Relationship {

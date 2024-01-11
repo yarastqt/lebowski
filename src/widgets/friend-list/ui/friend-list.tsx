@@ -34,6 +34,7 @@ export const FriendList: FC = () => {
       {friends.map((friend) => (
         <UserListItem
           key={friend.id}
+          avatarUrl={friend.avatarUrl}
           description={friend.email}
           onPress={() => {
             navigation.navigate(Route.Friend, {

@@ -51,7 +51,7 @@ export const ProfileInfo: FC = () => {
   return (
     <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={onPress}>
       <Animated.View style={[styles.root, rootStyles]}>
-        <Avatar displayName={user.displayName} size={64} />
+        <Avatar displayName={user.displayName} size={64} url={user.avatarUrl} />
 
         <View style={styles.heading}>
           <Text style={styles.displayName}>{user.displayName}</Text>

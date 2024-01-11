@@ -29,9 +29,10 @@ export const signupModel = (() => {
 
         await setDoc(userRef, {
           id: result.user.uid,
+          avatarUrl: '',
+          createdAt: serverTimestamp(),
           displayName: getDisplayNameFromEmail(result.user.email),
           email: result.user.email,
-          createdAt: serverTimestamp(),
           settings: {
             colorScheme: ColorScheme.Dark,
             defaultCurrency: Currency.Usd,

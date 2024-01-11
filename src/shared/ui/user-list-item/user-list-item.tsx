@@ -12,13 +12,14 @@ import { createStyles, useTheme } from '@app/shared/theme'
 import { Avatar } from '../avatar'
 
 export interface UserListItemProps {
+  avatarUrl: string
   description: string
-  onPress: () => void
   displayName: string
+  onPress: () => void
 }
 
 export const UserListItem: FC<UserListItemProps> = (props) => {
-  const { description, onPress, displayName } = props
+  const { avatarUrl, description, onPress, displayName } = props
 
   const theme = useTheme()
   const styles = useStyles()
@@ -44,7 +45,7 @@ export const UserListItem: FC<UserListItemProps> = (props) => {
   return (
     <Pressable onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut}>
       <Animated.View style={[styles.root, rootStyles]}>
-        <Avatar size={48} displayName={displayName} />
+        <Avatar displayName={displayName} size={48} url={avatarUrl} />
 
         <View style={styles.heading}>
           <Text style={styles.title}>{displayName}</Text>
