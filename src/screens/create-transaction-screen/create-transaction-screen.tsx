@@ -35,6 +35,7 @@ export const CreateTransactionScreen: FC<CreateTransactionScreenProps> = (props)
             errorMessage={fields.amount.error}
             isInvalid={fields.amount.isInvalid}
             label={<Trans>Amount</Trans>}
+            maxLength={9}
           />
           <TextField
             {...fields.comment.props}
