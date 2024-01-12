@@ -4,18 +4,20 @@ import { View } from 'react-native'
 import { SignupForm } from '@app/features/signup'
 import { ScreenLayout } from '@app/layouts/screen-layout'
 import { createStyles } from '@app/shared/theme'
-import { Logo } from '@app/shared/ui'
+import { Logo, Section } from '@app/shared/ui'
 
 export const SignupScreen: FC = () => {
   const styles = useStyles()
 
   return (
     <ScreenLayout title="Sign Up">
-      <View style={styles.logo}>
-        <Logo width={190} height={48} />
-      </View>
+      <Section>
+        <View style={styles.logo}>
+          <Logo width={190} height={48} />
+        </View>
 
-      <SignupForm />
+        <SignupForm />
+      </Section>
     </ScreenLayout>
   )
 }
