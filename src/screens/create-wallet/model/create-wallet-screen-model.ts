@@ -56,9 +56,6 @@ createWalletFx.failData.watch((error) => {
 export const createWalletScreenModel = {
   form,
   gate,
-
-  '@@unitShape': () => ({
-    isPending: $isPending,
-    availableWallets: $availableWallets,
-  }),
+  $isPending,
+  $availableWallets,
 }
