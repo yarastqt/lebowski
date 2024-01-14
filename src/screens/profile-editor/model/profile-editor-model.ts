@@ -19,7 +19,10 @@ const form = createForm<FormValues>({
     avatarUrl: '',
   },
   validate: rules.config(() => ({
-    displayName: rules.combine(rules.required('Display name is required')),
+    displayName: rules.combine(
+      rules.required('Display name is required'),
+      rules.string.max(40, 'Display name is too long'),
+    ),
   })),
 })
 

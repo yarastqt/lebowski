@@ -33,7 +33,7 @@ export const ProfileEditorScreen: FC = () => {
             errorMessage={fields.displayName.error}
             isInvalid={fields.displayName.isInvalid}
             label={<Trans>Display name</Trans>}
-            maxLength={120}
+            maxLength={40}
           />
 
           <ActionButton onPress={submit} isPending={isUpdating} isDisabled={isInvalid}>
