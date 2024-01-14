@@ -30,7 +30,7 @@ export const SendInviteScreen: FC = () => {
           />
 
           <ActionButton isDisabled={isInvalid} isPending={isSending} onPress={submit}>
-            <Trans>Send invite</Trans>
+            {isSending ? <Trans>Sending...</Trans> : <Trans>Send invite</Trans>}
           </ActionButton>
         </Form>
       </Section>
