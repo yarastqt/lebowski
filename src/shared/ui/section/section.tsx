@@ -17,7 +17,6 @@ export const Section: FC<SectionProps> = (props) => {
 
 const useStyles = createStyles(() => ({
   root: {
-    flex: 1,
     gap: 24,
     padding: 24,
   },
