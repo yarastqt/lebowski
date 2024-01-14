@@ -1,3 +1,4 @@
+import { SaveFormat, manipulateAsync } from 'expo-image-manipulator'
 import { launchImageLibraryAsync } from 'expo-image-picker'
 import { FC, useCallback } from 'react'
 import { Pressable, View } from 'react-native'
@@ -18,7 +19,6 @@ export const AvatarPicker: FC<AvatarPickerProps> = (props) => {
   const styles = useStyles()
 
   const onSelectImage = useCallback(async () => {
-    // TODO: Add image resize.
     const result = await launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [1, 1],
@@ -27,9 +27,17 @@ export const AvatarPicker: FC<AvatarPickerProps> = (props) => {
 
     const asset = result.assets?.at(0)
 
-    if (asset) {
-      onChange(asset.uri)
+    if (!asset) {
+      return
     }
+
+    const resizeResult = await manipulateAsync(
+      asset.uri,
+      [{ resize: { width: 240, height: 240 } }],
+      { compress: 1, format: SaveFormat.JPEG },
+    )
+
+    onChange(resizeResult.uri)
   }, [onChange])
 
   return (
