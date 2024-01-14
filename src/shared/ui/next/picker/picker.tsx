@@ -109,7 +109,7 @@ export function Picker<T>(props: PickerProps<T>) {
       <Pressable onPress={() => setOpen(true)} onPressIn={onPressIn} onPressOut={onPressOut}>
         <Animated.View style={[styles.field, fieldStyles]}>
           <Animated.Text style={[styles.label, labelStyles]}>{label}</Animated.Text>
-          {displayValue && <Animated.Text style={styles.value}>{displayValue.title}</Animated.Text>}
+          <Animated.Text style={styles.value}>{displayValue?.title}</Animated.Text>
 
           <Animated.View style={chevronStyles}>
             <ArrowShortBottom size={24} color={theme.color.textSecondary} />
