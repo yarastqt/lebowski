@@ -17,6 +17,7 @@ import { ProfileEditorScreen } from './profile-editor'
 import { ProfileScreen } from './profile-screen'
 import { SendInviteScreen } from './send-invite'
 import { SettingsScreen } from './settings-screen'
+import { ShareProfileScreen } from './share-profile'
 import { SignInScreen } from './signin-screen'
 import { SignupScreen } from './signup-screen'
 
@@ -46,6 +47,7 @@ export const RootScreens: FC = () => {
             <RootStack.Screen component={CreateWalletScreen} name={Route.CreateWallet} />
             <RootStack.Screen component={ProfileEditorScreen} name={Route.ProfileEditor} />
             <RootStack.Screen component={SendInviteScreen} name={Route.SendInvite} />
+            <RootStack.Screen component={ShareProfileScreen} name={Route.ShareProfile} />
           </RootStack.Group>
         </>
       ) : (

@@ -14,6 +14,7 @@ export enum Route {
   CreateWallet = 'CreateWallet',
   ProfileEditor = 'ProfileEditor',
   SendInvite = 'SendInvite',
+  ShareProfile = 'ShareProfile',
 }
 
 export type RootStackParamList = {
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   Friend: { displayName: string; id: string }
   ProfileEditor: undefined
   SendInvite: undefined
+  ShareProfile: undefined
 }
 
 export type ScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<

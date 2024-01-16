@@ -5,19 +5,21 @@ import { createStyles } from '@app/shared/theme'
 
 export interface SectionProps {
   children: ReactNode
+  isStretched?: boolean
 }
 
 export const Section: FC<SectionProps> = (props) => {
-  const { children } = props
+  const { children, isStretched } = props
 
   const styles = useStyles()
 
-  return <View style={styles.root}>{children}</View>
+  return <View style={styles.root({ isStretched })}>{children}</View>
 }
 
 const useStyles = createStyles(() => ({
-  root: {
+  root: (props: Pick<SectionProps, 'isStretched'>) => ({
+    flex: props.isStretched ? 1 : 0,
     gap: 24,
     padding: 24,
-  },
+  }),
 }))
