@@ -1,5 +1,6 @@
 import { allSettled } from 'effector'
 import { Provider, useUnit } from 'effector-react'
+import * as ScreenOrientation from 'expo-screen-orientation'
 import * as SplashScreen from 'expo-splash-screen'
 import { FC, useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -15,6 +16,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { NavigationContainer } from '@react-navigation/native'
 
 SplashScreen.preventAutoHideAsync()
+ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
 
 export const Application: FC = () => {
   const { isFontsLoaded } = useLoadFonts()
